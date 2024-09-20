@@ -35,7 +35,14 @@ train['Order_Date'] = pd.to_datetime(train['Order_Date'], format='%d-%m-%Y', err
 train['Time_Orderd'] = pd.to_datetime(train['Time_Orderd'], format='%H:%M:%S', errors='coerce').dt.time
 train['Time_Order_picked'] = pd.to_datetime(train['Time_Order_picked'], format='%H:%M:%S', errors='coerce').dt.time
 
-# Final check of the processed dataset
-print(train.head())
-print("\nData types after conversion:")
-print(train.dtypes)
+# Step 8: Drop all rows with any NaN values
+train_cleaned = train.dropna()
+
+# Final check of the processed dataset after dropping NaNs
+print(train_cleaned.head())
+print("\nData types after dropping NaNs:")
+print(train_cleaned.dtypes)
+
+# Check the number of rows before and after dropping NaNs
+print(f"\nNumber of rows before dropping NaNs: {train.shape[0]}")
+print(f"Number of rows after dropping NaNs: {train_cleaned.shape[0]}")
