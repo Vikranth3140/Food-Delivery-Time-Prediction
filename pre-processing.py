@@ -8,7 +8,7 @@ train = pd.read_csv('datasets/kaggle/train.csv', skipinitialspace=True)
 
 train = train.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 
-# Converting to datatypes
+# Convert to appropriate datatypes
 train['Delivery_person_Age'] = pd.to_numeric(train['Delivery_person_Age'], errors='coerce').astype('Int64')
 train['Weatherconditions'] = train['Weatherconditions'].str.replace("conditions ", "", regex=False)
 train['Time_taken(min)'] = train['Time_taken(min)'].str.extract('(\d+)').astype('Int64')
@@ -33,6 +33,7 @@ train['Time_Orderd'] = pd.to_datetime(train['Time_Orderd'], format='%H:%M:%S', e
 train['Time_Order_picked'] = pd.to_datetime(train['Time_Order_picked'], format='%H:%M:%S', errors='coerce').dt.time
 
 # Drop rowa with NaN values
+train = train.replace("NaN", pd.NA)
 train_cleaned = train.dropna()
 
 train_cleaned.to_csv('datasets/new/train.csv', index=False)
