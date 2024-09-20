@@ -5,7 +5,7 @@ os.makedirs('datasets/new', exist_ok=True)
 
 def clean_dataset(df, is_train=True):
     # Strip white spaces
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    df[df.select_dtypes(['object']).columns] = df.select_dtypes(['object']).apply(lambda x: x.str.strip())
     
     # Convert columns to appropriate datatypes
     df['Delivery_person_Age'] = pd.to_numeric(df['Delivery_person_Age'], errors='coerce').astype('Int64')
