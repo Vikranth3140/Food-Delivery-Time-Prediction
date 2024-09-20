@@ -1,10 +1,14 @@
 import pandas as pd
+import os
+
+os.makedirs('datasets/new', exist_ok=True)
 
 # Load the dataset
-train = pd.read_csv('datasets/train.csv', skipinitialspace=True)
+train = pd.read_csv('datasets/kaggle/train.csv', skipinitialspace=True)
 
 train = train.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 
+# Converting to datatypes
 train['Delivery_person_Age'] = pd.to_numeric(train['Delivery_person_Age'], errors='coerce').astype('Int64')
 train['Weatherconditions'] = train['Weatherconditions'].str.replace("conditions ", "", regex=False)
 train['Time_taken(min)'] = train['Time_taken(min)'].str.extract('(\d+)').astype('Int64')
@@ -30,6 +34,8 @@ train['Time_Order_picked'] = pd.to_datetime(train['Time_Order_picked'], format='
 
 # Drop rowa with NaN values
 train_cleaned = train.dropna()
+
+train_cleaned.to_csv('datasets/new/train.csv', index=False)
 
 print(train_cleaned.head())
 print("\nData types after dropping NaNs:")
