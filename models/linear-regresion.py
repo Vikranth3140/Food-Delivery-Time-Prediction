@@ -1,4 +1,5 @@
 import pandas as pd
+from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_absolute_error
@@ -13,16 +14,19 @@ X = train.drop(columns=['Time_taken(min)'])
 y = train['Time_taken(min)']
 
 # One-hot encode categorical variables (dummy encoding)
-X = pd.get_dummies(X, drop_first=True)
+tqdm.pandas(desc="One-Hot Encoding")
+X = pd.get_dummies(X, drop_first=True).progress_apply(lambda x: x)
 
 # Split the dataset into training and validation sets (80% train, 20% validation)
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Initialize and train a Linear Regression model
+print("Starting to train the Linear Regression model")
 model = LinearRegression()
 model.fit(X_train, y_train)
 
 # Make predictions on the validation set
+print("Starting to make predictions")
 y_pred = model.predict(X_val)
 
 # Evaluate the model
