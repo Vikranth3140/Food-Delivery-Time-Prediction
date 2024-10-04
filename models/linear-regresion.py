@@ -1,3 +1,18 @@
+# Output
+
+# One-Hot Encoding: 100%|████████████████████████████████████████████████████████| 43120/43120 [00:01<00:00, 23765.36it/s]
+# Starting to train the Linear Regression model
+# Starting to make predictions
+# R² Score: 0.59
+# Mean Absolute Error (MAE): 4.75
+# Total time taken for training and predictions: 7033.54 seconds
+#        Actual  Predicted
+# 34848      17  15.304211
+# 10630      22   9.355344
+# 41107      32  35.016605
+# 9163       22  21.334744
+# 5035       41  36.983238
+
 import pandas as pd
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
