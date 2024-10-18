@@ -1,13 +1,13 @@
-import seaborn as sns
-import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import os
 
 # Load the dataset
-train = pd.read_csv('datasets\\new\\train.csv')
+train = pd.read_csv('../datasets/new/train.csv')
 print(train.head())
 
-# Create the directory to save plots if it doesn't exist
+# Create a directory to save the plots
 output_dir = "EDA_plots"
 os.makedirs(output_dir, exist_ok=True)
 
