@@ -53,28 +53,20 @@ Running a food delivery service comes with the challenge of keeping customers ha
 In order to address this issue effectively we are working on a Food Delivery Time Prediction System that utilizes machine learning methods. Our goal is to predict delivery times with precision by examining delivery data, current traffic situations and real time weather trends.
 
 %-------------------------------------------------------------------------
-\section{Related work - Research Papers}
+\section{Literature Survey}
+% \subsection{Related work - Research Papers}
 1. \textbf{DergiPark - Comparative Analysis of ML models}: It explores machine learning models for predicting food delivery times. The study highlights temperature, traffic, and courier background as important factors and suggests future work incorporating additional features.
 \textcolor{blue}{\href{https://dergipark.org.tr/en/pub/aita/issue/84471/1459560}{Link}}
 
 2. \textbf{DergiPark - Application of Random Forest algorithm}: It analyzes online food ordering data to predict food delivery status using the Random Forest algorithm. It also suggests that traffic conditions have minimal impact on delivery timing, likely due to the use of single-person vehicles. \textcolor{blue}{\href{https://dergipark.org.tr/en/pub/forecasting/issue/60291/842180}{Link}}
 
-3. \textbf{Medium - Food Delivery Time Prediction Model}: It emphasizes feature engineering to extract valuable insights for improved model performance. The second part focuses on further data preprocessing, including Label Encoding and Standardization, followed by training and evaluating the model.
-\textcolor{blue}{\href{https://medium.com/@salonijhalani.sj/food-delivery-time-prediction-model-77200d394f2b}{Link}}
-
 %-------------------------------------------------------------------------
-\section{Timeline}
-\textbf{Week 1-2}: Clean and transform data, conduct data analysis, visualize data patterns, and understand dataset characteristics.
+\section{Dataset}
+    \subsection{Dataset Preprocessing}
+        converted objects to their respective types.
+        dropped datasets with some parameters having null values.
 
-\textbf{Week 3-4}:  Apply initial ML models and assess models using metrics like accuracy, precision, and recall.
-
-\textbf{Week 5-6}: Refine models based on feedback and integrate new features for performance improvement.
-
-\textbf{Week 7-8}: Test and implement different modeling techniques and feature combinations to enhance results.
-
-\textbf{Week 8-9}: Write initial drafts for report sections, summarize model performance and findings in the report, and prepare visualizations to support conclusions.
-
-\textbf{Week 10-11}: Complete the report with a detailed conclusion and revisions, and ensure all sections are coherent and polished. Prepare for the final project presentation
+    \subsection{Exploratory Data Analysis (EDA)}
 
 %-------------------------------------------------------------------------
 \section{Individual Tasks}
