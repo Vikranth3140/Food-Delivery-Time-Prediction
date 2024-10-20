@@ -178,6 +178,95 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 
 %-------------------------------------------------------------------------
 \section{Methodology}
+In this project, we aim to predict food delivery times using machine learning techniques. The dataset contains various features such as weather conditions, traffic density, vehicle type, and delivery person characteristics. Our goal is to leverage these features to predict the time taken for a delivery.
+
+    We followed a structured methodology which involved the following steps:
+    \begin{itemize}
+        \item \textbf{Data Collection and Preprocessing}: The dataset was preprocessed to handle inconsistencies, missing values, and data types. Categorical variables were label-encoded to prepare the data for machine learning models.
+        \item \textbf{Feature Selection}: Feature importance techniques, such as using Random Forest's feature importances, were employed to identify the most influential features.
+        \item \textbf{Model Training and Evaluation}: Multiple machine learning models were trained, evaluated, and compared using performance metrics such as R² score and Mean Absolute Error (MAE).
+        \item \textbf{Exploratory Data Analysis (EDA)}: Visualizations such as box plots, violin plots, and pair plots were generated to understand feature distributions and relationships.
+    \end{itemize}
+
+    \subsection{Models Used}
+        We experimented with several machine learning models for predicting delivery times. Below are the models used and their respective performance metrics:
+
+        \subsubsection{Linear Regression}
+        \textbf{Linear Regression} is a simple model that assumes a linear relationship between the features and the target variable. It serves as a baseline for this task. Categorical features were label-encoded to be used in this model.
+
+        \textbf{Performance Metrics}:
+        \begin{itemize}
+            \item R² Score: 0.51
+            \item Mean Absolute Error (MAE): 5.25 minutes
+        \end{itemize}
+
+        \textbf{Advantages}:
+        \begin{itemize}
+            \item Simple to interpret and implement.
+            \item Provides a useful baseline model.
+        \end{itemize}
+
+        \textbf{Disadvantages}:
+        \begin{itemize}
+            \item Cannot capture non-linear relationships.
+            \item Can underfit complex datasets like ours.
+        \end{itemize}
+
+        \subsubsection{Decision Tree}
+        The \textbf{Decision Tree Regressor} was used to capture non-linear relationships between features. This model recursively splits the dataset into subsets based on feature values, making predictions at the leaf nodes.
+
+        \textbf{Performance Metrics}:
+        \begin{itemize}
+            \item R² Score: 0.53
+            \item Mean Absolute Error (MAE): 4.77 minutes
+        \end{itemize}
+
+        \textbf{Advantages}:
+        \begin{itemize}
+            \item Can handle non-linear data.
+            \item Easy to interpret as a set of rules.
+        \end{itemize}
+
+        \textbf{Disadvantages}:
+        \begin{itemize}
+            \item Prone to overfitting on training data.
+        \end{itemize}
+
+        \subsubsection{Bagging with Decision Trees}
+        To reduce overfitting, we implemented \textbf{Bagging} with a base estimator of Decision Tree. Bagging helps by creating multiple training sets through bootstrap sampling and averaging their predictions.
+
+        \textbf{Performance Metrics}:
+        \begin{itemize}
+            \item R² Score: 0.75
+            \item Mean Absolute Error (MAE): 3.63 minutes
+        \end{itemize}
+
+        \textbf{Advantages}:
+        \begin{itemize}
+            \item Reduces overfitting.
+            \item Provides better generalization to unseen data.
+        \end{itemize}
+
+        \subsubsection{Random Forest}
+        \textbf{Random Forest} is an ensemble learning method that builds multiple decision trees and averages their predictions to improve accuracy and control overfitting. It leverages both bagging and feature randomness to create a robust model.
+
+        \textbf{Performance Metrics}:
+        \begin{itemize}
+            \item R² Score: 0.76
+            \item Mean Absolute Error (MAE): 3.61 minutes
+        \end{itemize}
+
+        \textbf{Advantages}:
+        \begin{itemize}
+            \item Handles non-linear data well.
+            \item Less prone to overfitting than individual decision trees.
+        \end{itemize}
+
+        \textbf{Disadvantages}:
+        \begin{itemize}
+            \item Longer training time due to multiple trees.
+            \item Less interpretable compared to single decision trees.
+        \end{itemize}
 
 
 %-------------------------------------------------------------------------
