@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import r2_score, mean_absolute_error
+from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
 # Load the preprocessed dataset
@@ -11,16 +12,19 @@ df = pd.read_csv('../datasets/new/train.csv')
 X = df.drop(columns=['Time_taken(min)'])  # Features (all columns except the target)
 y = df['Time_taken(min)']  # Target (Time taken)
 
-# Step 2: One-hot encode categorical variables
-X = pd.get_dummies(X, drop_first=True)
+# Step 2: Label encode categorical variables
+label_encoders = {}
+for column in X.select_dtypes(include=['object']).columns:
+    label_encoders[column] = LabelEncoder()
+    X[column] = label_encoders[column].fit_transform(X[column])
 
 # Step 3: Split the dataset into training and validation sets (80% train, 20% validation)
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Step 4: Initialize the Decision Tree Regressor
+# Step 4: Initialize the Decision Tree model
 model = DecisionTreeRegressor(random_state=42)
 
-# Step 5: Train the model
+# Step 5: Train the Decision Tree model
 model.fit(X_train, y_train)
 
 # Step 6: Make predictions on the validation set
