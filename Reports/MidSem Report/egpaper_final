@@ -56,17 +56,129 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 \section{Literature Survey}
 % \subsection{Related work - Research Papers}
 1. \textbf{DergiPark - Comparative Analysis of ML models}: It explores machine learning models for predicting food delivery times. The study highlights temperature, traffic, and courier background as important factors and suggests future work incorporating additional features.
-\textcolor{blue}{\href{https://dergipark.org.tr/en/pub/aita/issue/84471/1459560}{Link}}
+\cite{dergipark1}
 
-2. \textbf{DergiPark - Application of Random Forest algorithm}: It analyzes online food ordering data to predict food delivery status using the Random Forest algorithm. It also suggests that traffic conditions have minimal impact on delivery timing, likely due to the use of single-person vehicles. \textcolor{blue}{\href{https://dergipark.org.tr/en/pub/forecasting/issue/60291/842180}{Link}}
+2. \textbf{DergiPark - Application of Random Forest algorithm}: It analyzes online food ordering data to predict food delivery status using the Random Forest algorithm. It also suggests that traffic conditions have minimal impact on delivery timing, likely due to the use of single-person vehicles.
+\cite{dergipark2}
 
 %-------------------------------------------------------------------------
 \section{Dataset}
-    \subsection{Dataset Preprocessing}
-        converted objects to their respective types.
-        dropped datasets with some parameters having null values.
+    The dataset used in this project is obtained from a publicly available source on Kaggle \cite{kaggle}. It contains comprehensive records of food delivery services, with details on delivery times, weather conditions, traffic density, and information about the delivery personnel and locations involved. These features, combined with the target variable representing delivery time, make it an ideal dataset for training machine learning models to predict delivery times.
+    
+   \subsection{Data Preprocessing}
+        The dataset required handling inconsistencies, mixed data types, and missing values to prepare it for machine learning. The main preprocessing steps are summarized below:
+        
+        \begin{itemize}
+            \item Removed "conditions" prefix from \textit{Weatherconditions}.
+            \item Standardized columns like \textit{ID}, \textit{Road\_traffic\_density}, \textit{Type\_of\_order}, \textit{City}, etc. as strings.
+            \item Converted \textit{Delivery\_person\_Age}, \textit{Vehicle\_condition}, \textit{multiple\_deliveries} to integers.
+            \item Converted \textit{Delivery\_person\_Ratings}, latitudes, and longitudes to floats.
+            \item Extracted and converted \textit{Time\_taken(min)} to integers.
+            \item Converted \textit{Order\_Date} to \textit{datetime} and extracted time from \textit{Time\_Orderd} and \textit{Time\_Order\_picked}.
+            \item Dropped rows with null values, reducing the dataset to 41,368 rows.
+        \end{itemize}
+    
+    \subsection{Feature Summary}
+        After preprocessing, the dataset contained the following features with their respective data types:
+        
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Column Name}               & \textbf{Data Type} \\
+                \hline
+                ID                                 & object             \\
+                Delivery\_person\_ID               & object             \\
+                Delivery\_person\_Age              & int64              \\
+                Delivery\_person\_Ratings          & float64            \\
+                Restaurant\_latitude               & float64            \\
+                Restaurant\_longitude              & float64            \\
+                Delivery\_location\_latitude       & float64            \\
+                Delivery\_location\_longitude      & float64            \\
+                Order\_Date                        & datetime           \\
+                Time\_Orderd                       & time               \\
+                Time\_Order\_picked                & time               \\
+                Weatherconditions                  & object             \\
+                Road\_traffic\_density             & object             \\
+                Vehicle\_condition                 & int64              \\
+                Type\_of\_order                    & object             \\
+                Type\_of\_vehicle                  & object             \\
+                multiple\_deliveries               & int64              \\
+                Festival                           & object             \\
+                City                               & object             \\
+                Time\_taken(min)                   & int64              \\
+                \hline
+            \end{tabular}
+            \caption{Data types of the dataset features after preprocessing}
+            \label{tab:dataset_dtypes}
+        \end{table}
 
+    \subsection{Feature Importance}
+        To identify the most influential features in predicting delivery time, we used a \texttt{Random Forest Regressor} to compute feature importance scores. The top features impacting delivery time prediction are `Road\_traffic\_density`, `multiple\_deliveries`, and `Delivery\_person\_Ratings`. 
+        
+        \begin{itemize}
+            \item \textbf{Traffic Density}: Traffic conditions (specifically low and jammed traffic) were the most important features, strongly affecting delivery time. 
+            \item \textbf{Multiple Deliveries}: The number of deliveries handled by the delivery person in a single trip also plays a crucial role in determining delivery time.
+            \item \textbf{Delivery Person's Ratings}: Delivery personnel ratings were found to be highly correlated with delivery efficiency, with higher ratings likely indicating faster deliveries.
+            \item \textbf{Age of Delivery Person}: The age of the delivery person was another significant factor, potentially indicating a correlation between experience/physical fitness and delivery performance.
+            \item \textbf{Festival Season}: Whether or not it is a festival season impacts delivery time, likely due to increased demand and traffic congestion during such periods.
+        \end{itemize}
+        
+        The remaining features, such as geographic coordinates (latitude and longitude of the restaurant and delivery location) and the type of order (meal, drinks, etc.), had a lesser impact on delivery time. The importance scores from the Random Forest model provide useful insights into which factors should be prioritized in efforts to optimize delivery times.
+    
     \subsection{Exploratory Data Analysis (EDA)}
+        Exploratory Data Analysis (EDA) was performed to understand the distribution of the variables in the dataset and to explore relationships between the different features. Various visualizations were created to provide insights into how key features like traffic density, weather conditions, vehicle type, and delivery person ratings affect the time taken for deliveries.
+        
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=0.45\textwidth]{boxplot_City.png}
+            \caption{Time Taken (min) by City Type.}
+            \label{fig:city_type}
+        \end{figure}
+        
+        From the analysis, it was observed that delivery times vary significantly across different city types. Deliveries in semi-urban areas tend to take longer compared to urban and metropolitan areas. The variation in delivery times is also more pronounced in semi-urban areas, likely due to logistical challenges.
+        
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=0.45\textwidth]{boxplot_Road_traffic_density.png}
+            \caption{Time Taken (min) by Road Traffic Density.}
+            \label{fig:traffic_density}
+        \end{figure}
+        
+        Road traffic density emerged as a key factor influencing delivery times. Areas experiencing traffic jams showed significantly longer delivery times compared to those with lighter traffic conditions.
+        
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=0.45\textwidth]{violinplot_Weatherconditions.png}
+            \caption{Time Taken (min) by Weather Conditions.}
+            \label{fig:weather_conditions}
+        \end{figure}
+        
+        Weather conditions also have a considerable effect on delivery times. Stormy, foggy, and windy conditions generally lead to longer delivery times, while sunny weather is associated with shorter delivery times, suggesting that unfavourable weather can delay deliveries.
+        
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=0.45\textwidth]{histogram_Delivery_person_Ratings.png}
+            \caption{Distribution of Delivery Person Ratings.}
+            \label{fig:delivery_ratings}
+        \end{figure}
+        
+        Analysis of delivery person ratings revealed that most delivery personnel have high ratings, with a large proportion scoring between 4.5 and 5.0. This indicates a high overall level of service quality from delivery personnel.
+        
+        \begin{figure*}[ht]
+            \centering
+            \includegraphics[width=\textwidth]{pairplot.png}
+            \caption{Pair Plot of Numeric Features.}
+            \label{fig:pair_plot}
+        \end{figure*}
+        
+        The pair plot provides a comprehensive view of the relationships between numeric features in the dataset. This visualization helps in understanding potential correlations between variables, which can later inform the feature selection for model development.
+        
+        Overall, the EDA helped identify key variables that influence delivery time, such as traffic density, weather conditions, city type, and vehicle type. These factors will be important for building predictive models for delivery time estimation.
+
+%-------------------------------------------------------------------------
+\section{Methodology}
+
 
 %-------------------------------------------------------------------------
 \section{Individual Tasks}
@@ -76,10 +188,34 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 
 - \textbf{Mohammad Ayaan}: Evaluation of machine learning models. Optimization based on performance metrics.
 
-- \textbf{Ananya Garg}: Data Analysis, Implementation of machine learning models, Integration of final model into a CLI.
+- \textbf{Ananya Garg}: Data Analysis, Implementation of machine learning models.
 
 %-------------------------------------------------------------------------
-\section{Final Outcome}
-The final outcome will be a Food Delivery Time Prediction system accessible using a Command Line Interface. It will predict the estimated delivery time for users based on various factors such as distance, restaurant preparation time, traffic conditions, and order details. The system will utilize machine learning algorithms like regression models to improve prediction accuracy. The project will include a detailed report and presentation showcasing the methodology, models, evaluation results, and the final integrated system.
+\section{Conclusion}
+    In this project, we developed a system to predict food delivery times using machine learning techniques. The goal was to enhance delivery efficiency by considering multiple factors such as weather conditions, traffic density, and the delivery person's characteristics.
+    
+    We began by cleaning and preprocessing a real-world dataset of food deliveries, ensuring that the data was formatted correctly and free of inconsistencies. Exploratory Data Analysis (EDA) revealed important insights, such as the impact of weather and traffic on delivery times, and helped in selecting appropriate features for the prediction models.
+    
+    Several machine learning algorithms were explored, with a particular focus on regression models to predict delivery time. The models were trained on a cleaned dataset and evaluated for accuracy using appropriate metrics. The findings from this project indicate that incorporating external factors like weather and traffic can significantly improve the accuracy of delivery time predictions, which could potentially enhance customer satisfaction and operational efficiency for food delivery services.
+    
+    In future work, we aim to explore more sophisticated machine learning models, such as ensemble methods and deep learning architectures, to further enhance prediction accuracy. We also plan to integrate real-time data (e.g., current traffic conditions) to make the predictions even more dynamic and responsive.
+    
+    The final system is accessible via a command-line interface, allowing users to input order details and receive an estimated delivery time based on historical data and predictive modeling. The project has the potential to be extended into a full-fledged application for use by food delivery platforms.
+
+\begin{thebibliography}{9}
+    \bibitem{dergipark1} 
+        Comparative Analysis of ML Models for Food Delivery Prediction. 
+        Available at: \url{https://dergipark.org.tr/en/pub/aita/issue/84471/1459560}.
+    
+    \bibitem{dergipark2} 
+        Application of Random Forest Algorithm in Food Delivery Time Prediction. 
+        Available at: \url{https://dergipark.org.tr/en/pub/forecasting/issue/60291/842180}.
+    
+    \bibitem{kaggle} 
+        Gaurav Malik. 
+        \emph{Food Delivery Dataset}. 
+        Available at: \url{https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset/data}.
+
+\end{thebibliography}
 
 \end{document}
