@@ -29,13 +29,13 @@ X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_st
 base_model = DecisionTreeRegressor(random_state=42)
 
 # Step 5: Initialize Bagging Regressor
-bagging_model = BaggingRegressor(estimator=base_model, n_estimators=50, random_state=42, n_jobs=-1)
+model = BaggingRegressor(estimator=base_model, n_estimators=50, random_state=42, n_jobs=-1)
 
 # Step 6: Train the Bagging model
-bagging_model.fit(X_train, y_train)
+model.fit(X_train, y_train)
 
 # Step 7: Make predictions on the validation set
-y_pred = bagging_model.predict(X_val)
+y_pred = model.predict(X_val)
 
 # Step 8: Evaluate the model
 r2 = r2_score(y_val, y_pred)
