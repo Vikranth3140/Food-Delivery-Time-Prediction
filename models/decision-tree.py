@@ -8,36 +8,39 @@ import matplotlib.pyplot as plt
 # Load the preprocessed dataset
 df = pd.read_csv('../datasets/new/train.csv')
 
-# Step 1: Prepare features (X) and target (y)
-X = df.drop(columns=['Time_taken(min)'])  # Features (all columns except the target)
-y = df['Time_taken(min)']  # Target (Time taken)
+# Prepare the features (X) and the target (y)
+X = df.drop(columns=['Time_taken(min)'])
+y = df['Time_taken(min)']
 
-# Step 2: Label encode categorical variables
-label_encoders = {}
-for column in X.select_dtypes(include=['object']).columns:
-    label_encoders[column] = LabelEncoder()
-    X[column] = label_encoders[column].fit_transform(X[column])
+# Identify categorical columns
+categorical_columns = X.select_dtypes(include=['object']).columns
 
-# Step 3: Split the dataset into training and validation sets (80% train, 20% validation)
+# Apply label encoding on categorical columns
+label_encoder = LabelEncoder()
+for col in categorical_columns:
+    X[col] = label_encoder.fit_transform(X[col])
+
+# Split the dataset into 80% train and 20% validation sets
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Step 4: Initialize the Decision Tree model
+# Initialize the Decision Tree model
 model = DecisionTreeRegressor(random_state=42)
 
-# Step 5: Train the Decision Tree model
+# Train the Decision Tree model
 model.fit(X_train, y_train)
 
-# Step 6: Make predictions on the validation set
+# Make predictions on the validation set
 y_pred = model.predict(X_val)
 
-# Step 7: Evaluate the model
+# Evaluate the model
 r2 = r2_score(y_val, y_pred)
 mae = mean_absolute_error(y_val, y_pred)
 
+# Print the evaluation metrics
 print(f"R² Score: {r2:.2f}")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 
-# Optional: Plot the first few actual vs predicted values
+# Plot the first few actual vs predicted values
 plt.figure(figsize=(10, 6))
 plt.scatter(range(len(y_val)), y_val, label="Actual", alpha=0.6)
 plt.scatter(range(len(y_pred)), y_pred, label="Predicted", alpha=0.6)

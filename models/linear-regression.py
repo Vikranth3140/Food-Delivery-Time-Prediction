@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import BaggingRegressor
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
@@ -24,13 +23,10 @@ for col in categorical_columns:
 # Split the dataset into 80% train and 20% validation sets
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Initialize the Decision Tree model
-base_model = DecisionTreeRegressor(random_state=42)
+# Initialize the Linear Regression model
+model = LinearRegression()
 
-# Initialize Bagging Regressor
-model = BaggingRegressor(estimator=base_model, n_estimators=50, random_state=42, n_jobs=-1)
-
-# Train the Decision Tree model
+# Train the Linear Regression model
 model.fit(X_train, y_train)
 
 # Make predictions on the validation set
@@ -48,7 +44,7 @@ print(f"Mean Absolute Error (MAE): {mae:.2f}")
 plt.figure(figsize=(10, 6))
 plt.scatter(range(len(y_val)), y_val, label="Actual", alpha=0.6)
 plt.scatter(range(len(y_pred)), y_pred, label="Predicted", alpha=0.6)
-plt.title("Bagging: Actual vs Predicted Delivery Time")
+plt.title("Linear Regression: Actual vs Predicted Delivery Time")
 plt.xlabel("Samples")
 plt.ylabel("Time Taken (min)")
 plt.legend()
