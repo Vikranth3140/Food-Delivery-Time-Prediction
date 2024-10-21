@@ -178,13 +178,13 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 
 %-------------------------------------------------------------------------
 \section{Methodology}
-In this project, we aim to predict food delivery times using machine learning techniques. The dataset contains various features such as weather conditions, traffic density, vehicle type, and delivery person characteristics. Our goal is to leverage these features to predict the time taken for a delivery.
+    In this project, we aim to predict food delivery times using machine learning techniques. The dataset contains various features such as weather conditions, traffic density, vehicle type, and delivery person characteristics. Our goal is to leverage these features to predict the time taken for a delivery.
 
     We followed a structured methodology which involved the following steps:
     \begin{itemize}
         \item \textbf{Data Collection and Preprocessing}: The dataset was preprocessed to handle inconsistencies, missing values, and data types. Categorical variables were label-encoded to prepare the data for machine learning models.
         \item \textbf{Feature Selection}: Feature importance techniques, such as using Random Forest's feature importances, were employed to identify the most influential features.
-        \item \textbf{Model Training and Evaluation}: Multiple machine learning models were trained, evaluated, and compared using performance metrics such as R² score and Mean Absolute Error (MAE).
+        \item \textbf{Model Training and Evaluation}: Multiple machine learning models were trained, evaluated, and compared using performance metrics such as R² score, Mean Squared Error (MSE), and Mean Absolute Error (MAE).
         \item \textbf{Exploratory Data Analysis (EDA)}: Visualizations such as box plots, violin plots, and pair plots were generated to understand feature distributions and relationships.
     \end{itemize}
 
@@ -192,7 +192,7 @@ In this project, we aim to predict food delivery times using machine learning te
         We experimented with several machine learning models for predicting delivery times. Below are the models used and their respective performance metrics:
 
         \subsubsection{Linear Regression}
-        \textbf{Linear Regression} is a simple model that assumes a linear relationship between the features and the target variable. It serves as a baseline for this task. Categorical features were label-encoded to be used in this model.
+        \textbf{Linear Regression} assumes a linear relationship between features and the target variable. It serves as a baseline model for prediction.
 
         \textbf{Performance Metrics}:
         \begin{itemize}
@@ -200,20 +200,8 @@ In this project, we aim to predict food delivery times using machine learning te
             \item Mean Absolute Error (MAE): 5.25 minutes
         \end{itemize}
 
-        \textbf{Advantages}:
-        \begin{itemize}
-            \item Simple to interpret and implement.
-            \item Provides a useful baseline model.
-        \end{itemize}
-
-        \textbf{Disadvantages}:
-        \begin{itemize}
-            \item Cannot capture non-linear relationships.
-            \item Can underfit complex datasets like ours.
-        \end{itemize}
-
         \subsubsection{Decision Tree}
-        The \textbf{Decision Tree Regressor} was used to capture non-linear relationships between features. This model recursively splits the dataset into subsets based on feature values, making predictions at the leaf nodes.
+        The \textbf{Decision Tree Regressor} was employed to capture non-linear relationships between features. It recursively splits the dataset based on feature values.
 
         \textbf{Performance Metrics}:
         \begin{itemize}
@@ -221,19 +209,8 @@ In this project, we aim to predict food delivery times using machine learning te
             \item Mean Absolute Error (MAE): 4.77 minutes
         \end{itemize}
 
-        \textbf{Advantages}:
-        \begin{itemize}
-            \item Can handle non-linear data.
-            \item Easy to interpret as a set of rules.
-        \end{itemize}
-
-        \textbf{Disadvantages}:
-        \begin{itemize}
-            \item Prone to overfitting on training data.
-        \end{itemize}
-
         \subsubsection{Bagging with Decision Trees}
-        To reduce overfitting, we implemented \textbf{Bagging} with a base estimator of Decision Tree. Bagging helps by creating multiple training sets through bootstrap sampling and averaging their predictions.
+        To reduce overfitting, we applied \textbf{Bagging} with a base Decision Tree estimator. Bagging helps improve stability by averaging multiple models built on different subsets of the data.
 
         \textbf{Performance Metrics}:
         \begin{itemize}
@@ -241,14 +218,8 @@ In this project, we aim to predict food delivery times using machine learning te
             \item Mean Absolute Error (MAE): 3.63 minutes
         \end{itemize}
 
-        \textbf{Advantages}:
-        \begin{itemize}
-            \item Reduces overfitting.
-            \item Provides better generalization to unseen data.
-        \end{itemize}
-
         \subsubsection{Random Forest}
-        \textbf{Random Forest} is an ensemble learning method that builds multiple decision trees and averages their predictions to improve accuracy and control overfitting. It leverages both bagging and feature randomness to create a robust model.
+        \textbf{Random Forest} builds multiple decision trees and averages their predictions to improve accuracy and control overfitting. This model leverages both bagging and feature randomness.
 
         \textbf{Performance Metrics}:
         \begin{itemize}
@@ -256,16 +227,43 @@ In this project, we aim to predict food delivery times using machine learning te
             \item Mean Absolute Error (MAE): 3.61 minutes
         \end{itemize}
 
-        \textbf{Advantages}:
+        \subsubsection{XGBoost}
+        \textbf{XGBoost} is an optimized gradient boosting framework that can handle both classification and regression tasks, making it highly effective for structured datasets.
+
+        \textbf{Performance Metrics}:
         \begin{itemize}
-            \item Handles non-linear data well.
-            \item Less prone to overfitting than individual decision trees.
+            \item R² Score: 0.7901
+            \item Mean Squared Error (MSE): 18.42
+            \item Accuracy-like Measure (within 5 min): 76.92\%
         \end{itemize}
 
-        \textbf{Disadvantages}:
+        \subsubsection{LightGBM}
+        \textbf{LightGBM} is a gradient boosting framework that uses tree-based learning algorithms. It is designed to be distributed and efficient, particularly for large datasets.
+
+        \textbf{Performance Metrics}:
         \begin{itemize}
-            \item Longer training time due to multiple trees.
-            \item Less interpretable compared to single decision trees.
+            \item Number of estimators: 500
+            \item R² Score: 0.8076
+            \item Mean Absolute Error (MAE): 3.28 minutes
+            \item Mean Squared Error (MSE): 16.88
+        \end{itemize}
+
+        \subsubsection{ElasticNet}
+        \textbf{ElasticNet} is a regularized regression model that combines L1 (Lasso) and L2 (Ridge) penalties. This helps improve predictions when data shows multicollinearity.
+
+        \textbf{Performance Metrics} (with best parameters: $\alpha = 0.1$, L1 Ratio = 1):
+        \begin{itemize}
+            \item R² Score: 0.46
+            \item Mean Absolute Error (MAE): 5.52 minutes
+            \item Mean Squared Error (MSE): 47.36
+        \end{itemize}
+
+        \subsubsection{K-Means Clustering (for exploratory analysis)}
+        \textbf{K-Means Clustering} was applied as an unsupervised learning method to explore clusters in the dataset. It helps identify patterns in the data by grouping similar observations.
+
+        \textbf{Performance Metrics}:
+        \begin{itemize}
+            \item Average Silhouette Score (from K-Fold Cross-Validation): 0.3596
         \end{itemize}
 
 
