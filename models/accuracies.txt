@@ -41,3 +41,11 @@ LightGBM:
 Training Metrics               Test Metrics
 R2 score: ...                  R2 score: 0.80
 MSE:                           MSE: 16.88
+
+7.
+XGBoost:
+
+Training Metrics               Test Metrics
+R2 score: ...                  R2 score: 0.79
+MSE:                           MSE: 18.41
+
