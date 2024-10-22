@@ -4,40 +4,48 @@ Model Accuracies (80/20 split):
 Linear Regression:
 
 Training Metrics               Test Metrics
-R2 score: ...                  R2 score: ...
-MSE:                           MSE: ...
+R2 score: ....                 R2 score: 0.51
+MSE:                           MSE: 42.80
 
 2.
 Decision Tree:
 
 Training Metrics               Test Metrics
-R2 score: ...                  R2 score: ...
-MSE:                           MSE: ...
+R2 score: ...                  R2 score: 0.53
+MSE:                           MSE: 41.14
 
 3.
 Decision Tree with Bagging:
 
 Training Metrics               Test Metrics
-R2 score: ...                  R2 score: ...
-MSE:                           MSE: ...
+R2 score: ...                  R2 score: 0.75
+MSE:                           MSE: 21.67
 
 4.
 Random Forest:
 
 Training Metrics               Test Metrics
-R2 score: ...                  R2 score: ...
-MSE:                           MSE: ...
+R2 score: ...                  R2 score: 0.75
+MSE:                           MSE: 21.21
 
 5.
 Elastic Net Regularization:
 
 Training Metrics               Test Metrics
-R2 score: ...                  R2 score: ...
-MSE:                           MSE: ...
+R2 score: ...                  R2 score: 0.46
+MSE:                           MSE: 47.35
 
 6.
 LightGBM:
 
 Training Metrics               Test Metrics
-R2 score: ...                  R2 score: ...
-MSE:                           MSE: ...
+R2 score: ...                  R2 score: 0.80
+MSE:                           MSE: 16.88
+
+7.
+XGBoost:
+
+Training Metrics               Test Metrics
+R2 score: ...                  R2 score: 0.79
+MSE:                           MSE: 18.41
+
