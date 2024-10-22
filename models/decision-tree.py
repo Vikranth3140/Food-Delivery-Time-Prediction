@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import r2_score, mean_absolute_error
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
@@ -35,10 +35,12 @@ y_pred = model.predict(X_val)
 # Evaluate the model
 r2 = r2_score(y_val, y_pred)
 mae = mean_absolute_error(y_val, y_pred)
+mse = mean_squared_error(y_val, y_pred)
 
 # Print the evaluation metrics
 print(f"R² Score: {r2:.2f}")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
+print(f"Mean Squared Error (MSE): {mse:.2f}")
 
 # Plot the first few actual vs predicted values
 plt.figure(figsize=(10, 6))

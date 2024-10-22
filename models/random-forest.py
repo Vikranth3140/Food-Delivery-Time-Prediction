@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import r2_score, mean_absolute_error
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -42,18 +42,21 @@ for n_estimators in tqdm(range(100, 1001, 100), desc="Training Random Forest"):
     # Evaluate the model
     r2 = r2_score(y_val, y_pred)
     mae = mean_absolute_error(y_val, y_pred)
+    mse = mean_squared_error(y_val, y_pred)
 
     # Store the results
     results.append({
         'n_estimators': n_estimators,
         'r2_score': r2,
-        'mean_absolute_error': mae
+        'mean_absolute_error': mae,
+        'mean_squared_error': mse
     })
 
     # Print the evaluation metrics
     print(f"Number of estimators: {n_estimators}")
     print(f"R² Score: {r2:.4f}")
     print(f"Mean Absolute Error (MAE): {mae:.4f}")
+    print(f"Mean Squared Error (MSE): {mse:.4f}")
     print("-" * 50)
 
 # Convert results to DataFrame
