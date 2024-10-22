@@ -47,29 +47,31 @@ IIIT-Delhi, India \\
 
 
 %-------------------------------------------------------------------------
-\section{Motivation}
+\begin{abstract}
+    \textbf{Accurate delivery time estimates are crucial for customer satisfaction and operational efficiency in food delivery services. Delays due to traffic, weather, and multiple deliveries can significantly impact the customer experience. This project uses machine learning models—including Linear Regression, Decision Trees, Bagging, Random Forest, XGBoost, and LightGBM—to predict delivery times based on data related to traffic, weather, and delivery personnel. By employing feature selection and data preprocessing, we aim to enhance prediction accuracy. Models like Random Forest and LightGBM achieve promising R² scores above 0.75, demonstrating their effectiveness in improving logistics and service quality.}
+\end{abstract}
+
+%-------------------------------------------------------------------------
+\section{Introduction}
 Running a food delivery service comes with the challenge of keeping customers happy by delivering their meals on time and in condition despite hurdles like traffic or bad weather which can throw off the schedule unpredictably.
 
 In order to address this issue effectively we are working on a Food Delivery Time Prediction System that utilizes machine learning methods. Our goal is to predict delivery times with precision by examining delivery data, current traffic situations and real time weather trends.
 
 %-------------------------------------------------------------------------
 \section{Literature Survey}
-% \subsection{Related work - Research Papers}
-1. \textbf{DergiPark - Comparative Analysis of ML models}: It explores machine learning models for predicting food delivery times. The study highlights temperature, traffic, and courier background as important factors and suggests future work incorporating additional features.
-\cite{dergipark1}
+1. \textbf{DergiPark - Comparative Analysis of ML models}: The research paper titled "A Comparative Analysis of Machine Learning Models for Time Prediction in Food Delivery Operations" explores machine learning models like Random Forests and Gradient Boosting to enhance the precision of food delivery time forecasts by considering factors such as traffic volume and order quantity. Various performance indicators like Mean Absolute Error (MAE) and Root Mean Square Error (RMSE) were utilized by the researchers to assess the effectiveness of these models in predicting delivery times, in real world scenarios. The findings indicate that when it comes to making time predictions ensemble learning models, like Gradient Boosting tend to outperform methods. \cite{dergipark1}
 
-2. \textbf{DergiPark - Application of Random Forest algorithm}: It analyzes online food ordering data to predict food delivery status using the Random Forest algorithm. It also suggests that traffic conditions have minimal impact on delivery timing, likely due to the use of single-person vehicles.
-\cite{dergipark2}
+2. \textbf{DergiPark - Application of Random Forest algorithm}: The study uses features like time of day, restaurant info, delivery costs, distance, and traffic conditions to predict food delivery time. Random Forest (RF), an ensemble learning method, combines multiple models for better accuracy. RF builds on the Bagging method by adding randomness in feature selection, improving performance and reducing overfitting. 500 estimator trees and three randomly selected variables per split, the model achieved around 95\% accuracy. The model handles majority classes well but struggles with imbalanced data. Cross-validation and Bootstrap methods confirmed RF's high accuracy and reliability. Performance measures like confusion matrices, Kappa statistics, and cross-validation are employed to validate the model’s accuracy and error rate. Alternative methods, like the Bootstrap method also yield high classification rates. \cite{dergipark2}
 
 %-------------------------------------------------------------------------
 \section{Dataset}
     The dataset used in this project is obtained from a publicly available source on Kaggle \cite{kaggle}. It contains comprehensive records of food delivery services, with details on delivery times, weather conditions, traffic density, and information about the delivery personnel and locations involved. These features, combined with the target variable representing delivery time, make it an ideal dataset for training machine learning models to predict delivery times.
     
    \subsection{Data Preprocessing}
-        The dataset required handling inconsistencies, mixed data types, and missing values to prepare it for machine learning. The main preprocessing steps are summarized below:
+        The dataset required handling inconsistencies, mixed data types, and missing values to prepare it for machine learning which can be viewed \href{https://github.com/Vikranth3140/ML-Project/blob/main/pre-processing.py}{\textbf{here}}. The main preprocessing steps are summarized below:
         
         \begin{itemize}
-            \item Removed "conditions" prefix from \textit{Weatherconditions}.
+            \item Removed \textit{conditions} prefix from \textit{Weatherconditions}.
             \item Standardized columns like \textit{ID}, \textit{Road\_traffic\_density}, \textit{Type\_of\_order}, \textit{City}, etc. as strings.
             \item Converted \textit{Delivery\_person\_Age}, \textit{Vehicle\_condition}, \textit{multiple\_deliveries} to integers.
             \item Converted \textit{Delivery\_person\_Ratings}, latitudes, and longitudes to floats.
@@ -113,18 +115,18 @@ In order to address this issue effectively we are working on a Food Delivery Tim
             \label{tab:dataset_dtypes}
         \end{table}
 
-    \subsection{Feature Importance}
-        To identify the most influential features in predicting delivery time, we used a \texttt{Random Forest Regressor} to compute feature importance scores. The top features impacting delivery time prediction are `Road\_traffic\_density`, `multiple\_deliveries`, and `Delivery\_person\_Ratings`. 
+    % \subsection{Feature Importance}
+    %     To identify the most important features in predicting delivery time, we used a \href{https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html}{\textbf{KMeans}} to compute feature importance scores. The top features impacting delivery time prediction are `Road\_traffic\_density`, `multiple\_deliveries`, and `Delivery\_person\_Ratings`.
         
-        \begin{itemize}
-            \item \textbf{Traffic Density}: Traffic conditions (specifically low and jammed traffic) were the most important features, strongly affecting delivery time. 
-            \item \textbf{Multiple Deliveries}: The number of deliveries handled by the delivery person in a single trip also plays a crucial role in determining delivery time.
-            \item \textbf{Delivery Person's Ratings}: Delivery personnel ratings were found to be highly correlated with delivery efficiency, with higher ratings likely indicating faster deliveries.
-            \item \textbf{Age of Delivery Person}: The age of the delivery person was another significant factor, potentially indicating a correlation between experience/physical fitness and delivery performance.
-            \item \textbf{Festival Season}: Whether or not it is a festival season impacts delivery time, likely due to increased demand and traffic congestion during such periods.
-        \end{itemize}
+    %     \begin{itemize}
+    %         \item \textbf{Traffic Density}: Traffic conditions (specifically low and jammed traffic) were the most important features, strongly affecting delivery time.
+    %         \item \textbf{Multiple Deliveries}: The number of deliveries handled by the delivery person in a single trip also plays a crucial role in determining delivery time.
+    %         \item \textbf{Delivery Person's Ratings}: Delivery personnel ratings were found to be highly correlated with delivery efficiency, with higher ratings likely indicating faster deliveries.
+    %         \item \textbf{Age of Delivery Person}: The age of the delivery person was another significant factor, potentially indicating a correlation between experience/physical fitness and delivery performance.
+    %         \item \textbf{Festival Season}: Whether or not it is a festival season impacts delivery time, likely due to increased demand and traffic congestion during such periods.
+    %     \end{itemize}
         
-        The remaining features, such as geographic coordinates (latitude and longitude of the restaurant and delivery location) and the type of order (meal, drinks, etc.), had a lesser impact on delivery time. The importance scores from the Random Forest model provide useful insights into which factors should be prioritized in efforts to optimize delivery times.
+    %     The remaining features, such as geographic coordinates (latitude and longitude of the restaurant and delivery location) and the type of order (meal, drinks, etc.), had a lesser impact on delivery time. The importance scores from the Random Forest model provide useful insights into which factors should be prioritized in efforts to optimize delivery times.
     
     \subsection{Exploratory Data Analysis (EDA)}
         Exploratory Data Analysis (EDA) was performed to understand the distribution of the variables in the dataset and to explore relationships between the different features. Various visualizations were created to provide insights into how key features like traffic density, weather conditions, vehicle type, and delivery person ratings affect the time taken for deliveries.
@@ -165,12 +167,12 @@ In order to address this issue effectively we are working on a Food Delivery Tim
         
         Analysis of delivery person ratings revealed that most delivery personnel have high ratings, with a large proportion scoring between 4.5 and 5.0. This indicates a high overall level of service quality from delivery personnel.
         
-        \begin{figure*}[ht]
+        \begin{figure}[ht]
             \centering
-            \includegraphics[width=\textwidth]{pairplot.png}
+            \includegraphics[width=0.7\columnwidth]{pairplot.png}
             \caption{Pair Plot of Numeric Features.}
             \label{fig:pair_plot}
-        \end{figure*}
+        \end{figure}
         
         The pair plot provides a comprehensive view of the relationships between numeric features in the dataset. This visualization helps in understanding potential correlations between variables, which can later inform the feature selection for model development.
         
@@ -179,115 +181,79 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 %-------------------------------------------------------------------------
 \section{Methodology}
     In this project, we aim to predict food delivery times using machine learning techniques. The dataset contains various features such as weather conditions, traffic density, vehicle type, and delivery person characteristics. Our goal is to leverage these features to predict the time taken for a delivery.
-
+    
     We followed a structured methodology which involved the following steps:
     \begin{itemize}
         \item \textbf{Data Collection and Preprocessing}: The dataset was preprocessed to handle inconsistencies, missing values, and data types. Categorical variables were label-encoded to prepare the data for machine learning models.
         \item \textbf{Feature Selection}: Feature importance techniques, such as using Random Forest's feature importances, were employed to identify the most influential features.
-        \item \textbf{Model Training and Evaluation}: Multiple machine learning models were trained, evaluated, and compared using performance metrics such as R² score, Mean Squared Error (MSE), and Mean Absolute Error (MAE).
+        \item \textbf{Model Training and Evaluation}: Multiple machine learning models were trained, evaluated, and compared using performance metrics such as R² score and Mean Squared Error (MSE).
         \item \textbf{Exploratory Data Analysis (EDA)}: Visualizations such as box plots, violin plots, and pair plots were generated to understand feature distributions and relationships.
     \end{itemize}
-
-    \subsection{Models Used}
-        We experimented with several machine learning models for predicting delivery times. Below are the models used and their respective performance metrics:
-
+    
+    \subsection{Model Selection}
+        For predicting food delivery times, we have explored several regression techniques and ensemble methods like Linear Regression, Decision Trees, Bagging, Random Forests, Elastic Net Regularization, LightGBM, XGBoosting and K-Fold Cross-Validation.
+        Ensemble methods like Random Forests and Gradient Boosting are capable of handling complex interactions and non-linearities in the data.
+        
         \subsubsection{Linear Regression}
-        \textbf{Linear Regression} assumes a linear relationship between features and the target variable. It serves as a baseline model for prediction.
-
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item R² Score: 0.51
-            \item Mean Absolute Error (MAE): 5.25 minutes
-        \end{itemize}
-
+            Applied as a baseline model to explore the dataset’s linear relationships. It assumes a linear correlation between input features and the target variable. Although it provided initial insights, its performance was limited due to the complex nature of the data.
+        
         \subsubsection{Decision Tree}
-        The \textbf{Decision Tree Regressor} was employed to capture non-linear relationships between features. It recursively splits the dataset based on feature values.
-
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item R² Score: 0.53
-            \item Mean Absolute Error (MAE): 4.77 minutes
-        \end{itemize}
-
-        \subsubsection{Bagging with Decision Trees}
-        To reduce overfitting, we applied \textbf{Bagging} with a base Decision Tree estimator. Bagging helps improve stability by averaging multiple models built on different subsets of the data.
-
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item R² Score: 0.75
-            \item Mean Absolute Error (MAE): 3.63 minutes
-        \end{itemize}
-
+            Employed as a hierarchical decision support model. DTs use a tree-like structure to represent decisions and their consequences, including chance events, resource costs, and utility. They provide a clear visualization of the algorithm's decision-making process.
+        
+        \subsubsection{Bagging}
+            Used to improve model performance by training multiple models on random subsets of the original data. The results from these models are combined through a voting mechanism to make predictions, resulting in more accurate and robust predictions.
+        
         \subsubsection{Random Forest}
-        \textbf{Random Forest} builds multiple decision trees and averages their predictions to improve accuracy and control overfitting. This model leverages both bagging and feature randomness.
-
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item R² Score: 0.76
-            \item Mean Absolute Error (MAE): 3.61 minutes
-        \end{itemize}
-
-        \subsubsection{XGBoost}
-        \textbf{XGBoost} is an optimized gradient boosting framework that can handle both classification and regression tasks, making it highly effective for structured datasets.
-
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item R² Score: 0.7901
-            \item Mean Squared Error (MSE): 18.42
-            \item Accuracy-like Measure (within 5 min): 76.92\%
-        \end{itemize}
-
+            Utilized as an ensemble learning method for classification. RF constructs multiple decision trees and makes predictions based on the majority vote of these trees. Despite efforts to reduce dataset dimensionality, the RF model exhibited overfitting on the training set and did not outperform other models significantly.
+        
+        \subsubsection{Elastic Net Regularization}
+            Combines L1 and L2 regularization to handle multicollinearity and perform feature selection. It balances between Ridge and Lasso regression, allowing for robust predictions while reducing overfitting. This method was particularly useful for handling correlated features.
+        
         \subsubsection{LightGBM}
-        \textbf{LightGBM} is a gradient boosting framework that uses tree-based learning algorithms. It is designed to be distributed and efficient, particularly for large datasets.
+            Implemented as a gradient boosting framework known for its speed and efficiency in handling large datasets. LightGBM splits trees leaf-wise, rather than level-wise like other boosting algorithms, which helps in reducing overfitting and achieving better performance, as evidenced by its high R² score.
+        
+        \subsubsection{XGBoost}
+            Applied as a popular machine learning algorithm under ensemble learning. XGBoost is effective for supervised learning tasks like regression and classification. It iteratively builds a predictive model by combining predictions from multiple individual models, often decision trees, to enhance prediction accuracy and model performance.
 
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item Number of estimators: 500
-            \item R² Score: 0.8076
-            \item Mean Absolute Error (MAE): 3.28 minutes
-            \item Mean Squared Error (MSE): 16.88
-        \end{itemize}
+        \subsubsection{K-Fold Cross-Validation}
+            Implemented to evaluate the performance and generalizability of machine learning models. The dataset is split into K equally sized folds, and the model is trained on K-1 folds while being tested on the remaining fold. This process is repeated K times, with each fold used once as the validation set. The results are averaged to provide a robust estimate of model performance, reducing the likelihood of overfitting and ensuring that the model performs well on unseen data.
 
-        \subsubsection{ElasticNet}
-        \textbf{ElasticNet} is a regularized regression model that combines L1 (Lasso) and L2 (Ridge) penalties. This helps improve predictions when data shows multicollinearity.
+\usepackage{booktabs}
 
-        \textbf{Performance Metrics} (with best parameters: $\alpha = 0.1$, L1 Ratio = 1):
-        \begin{itemize}
-            \item R² Score: 0.46
-            \item Mean Absolute Error (MAE): 5.52 minutes
-            \item Mean Squared Error (MSE): 47.36
-        \end{itemize}
-
-        \subsubsection{K-Means Clustering (for exploratory analysis)}
-        \textbf{K-Means Clustering} was applied as an unsupervised learning method to explore clusters in the dataset. It helps identify patterns in the data by grouping similar observations.
-
-        \textbf{Performance Metrics}:
-        \begin{itemize}
-            \item Average Silhouette Score (from K-Fold Cross-Validation): 0.3596
-        \end{itemize}
-
-
-%-------------------------------------------------------------------------
-\section{Individual Tasks}
-- \textbf{Vikranth Udandarao}: Data collection, preprocessing, and analysis. Implementation of machine learning models.
-
-- \textbf{Swara Parekh}: Data collection, preprocessing, and analysis. Implementation of machine learning models.
-
-- \textbf{Mohammad Ayaan}: Evaluation of machine learning models. Optimization based on performance metrics.
-
-- \textbf{Ananya Garg}: Data Analysis, Implementation of machine learning models.
+\begin{table}[h!]
+    \centering
+    % \caption{Test Metrics for Different Models}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Model} & \textbf{MSE} & \textbf{R² Score} \\ \hline
+        Linear Regression              & 42.80     & 0.51      \\ \hline
+        Decision Tree                  & 41.14     & 0.53      \\ \hline
+        Decision Tree with Bagging     & 21.67     & 0.75      \\ \hline
+        Random Forest                  & 21.21     & 0.75      \\ \hline
+        Elastic Net Regularization     & 47.35     & 0.46      \\ \hline
+        LightGBM                      & 16.88     & 0.80      \\ \hline
+        XGBoost                       & 18.41     & 0.79      \\ \hline
+    \end{tabular}
+    \label{tab:model_metrics}
+\end{table}
+\textbf{Table 2.} Test Metrics for Different Models
 
 %-------------------------------------------------------------------------
 \section{Conclusion}
-    In this project, we developed a system to predict food delivery times using machine learning techniques. The goal was to enhance delivery efficiency by considering multiple factors such as weather conditions, traffic density, and the delivery person's characteristics.
+    In this project, we tried to predict food delivery time based on various features like traffic density, whether multiple deliveries are done, delivery person's age, delivery location, festival, city, type of order and vehicle, vehicle condition, delivery person rating, etc using machine learning techniques. The goal was to enhance delivery efficiency by considering multiple factors such as weather conditions, traffic density, and the delivery person's characteristics.
     
-    We began by cleaning and preprocessing a real-world dataset of food deliveries, ensuring that the data was formatted correctly and free of inconsistencies. Exploratory Data Analysis (EDA) revealed important insights, such as the impact of weather and traffic on delivery times, and helped in selecting appropriate features for the prediction models.
+    We started by cleaning and preprocessing a real-world food delivery dataset, ensuring it was properly formatted and free of inconsistencies. Through Exploratory Data Analysis (EDA), we identified key factors like weather and traffic that impact delivery times. Several regression models were trained and evaluated, revealing that incorporating external factors significantly improves prediction accuracy, which could enhance customer satisfaction and operational efficiency for food delivery services.
     
-    Several machine learning algorithms were explored, with a particular focus on regression models to predict delivery time. The models were trained on a cleaned dataset and evaluated for accuracy using appropriate metrics. The findings from this project indicate that incorporating external factors like weather and traffic can significantly improve the accuracy of delivery time predictions, which could potentially enhance customer satisfaction and operational efficiency for food delivery services.
-    
-    In future work, we aim to explore more sophisticated machine learning models, such as ensemble methods and deep learning architectures, to further enhance prediction accuracy. We also plan to integrate real-time data (e.g., current traffic conditions) to make the predictions even more dynamic and responsive.
-    
-    The final system is accessible via a command-line interface, allowing users to input order details and receive an estimated delivery time based on historical data and predictive modeling. The project has the potential to be extended into a full-fledged application for use by food delivery platforms.
+    In future work, we aim to narrow down the features used to train the models using KMeans Best Features and do more data pre-processing and more ensemble methods to further enhance prediction accuracy.
+
+    \subsection{Individual Contribution}
+        - \textbf{Vikranth Udandarao}: Literature review, Data Collection, EDA, visualization of dataset, model analysis and results.
+        
+        - \textbf{Swara Parekh}: Literature review, Data Collection, EDA, visualization of dataset, model analysis and results.
+        
+        - \textbf{Mohammad Ayaan}: Literature review, Data Collection, EDA, visualization of dataset, model analysis and results.
+        
+        - \textbf{Ananya Garg}: Literature review, Data Collection, EDA, visualization of dataset, model analysis and results.
 
 \begin{thebibliography}{9}
     \bibitem{dergipark1} 
