@@ -10,7 +10,7 @@ df=pd.read_csv('../datasets/new/train.csv')
 X=df.drop(columns=['Time_taken(min)'])
 y=df['Time_taken(min)']
 
-categorical_columns = X.select_dtypes(include=['object']).columns
+categorical_columns=X.select_dtypes(include=['object']).columns
 # Label encoding 
 label_encoder=LabelEncoder()
 for col in categorical_columns:
