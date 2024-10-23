@@ -5,21 +5,21 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('../datasets/new/train.csv')
+df=pd.read_csv('../datasets/new/train.csv')
 
-X = df.drop(columns=['Time_taken(min)'])
-y = df['Time_taken(min)']
+X=df.drop(columns=['Time_taken(min)'])
+y=df['Time_taken(min)']
 
-categorical_columns = X.select_dtypes(include=['object']).columns
+categorical_columns=X.select_dtypes(include=['object']).columns
 
 # Label encoding on categorical columns
-label_encoder = LabelEncoder()
+label_encoder=LabelEncoder()
 for col in categorical_columns:
-    X[col] = label_encoder.fit_transform(X[col])
+    X[col]=label_encoder.fit_transform(X[col])
 
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)#splitting
 
-model = DecisionTreeRegressor(random_state=42)
+model=DecisionTreeRegressor(random_state=42)
 model.fit(X_train, y_train)#train
 y_pred=model.predict(X_val)
 
@@ -30,7 +30,6 @@ mse=mean_squared_error(y_val, y_pred)
 print(f"R² Score: {r2:.2f}")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 print(f"Mean Squared Error (MSE): {mse:.2f}")
-
 plt.figure(figsize=(10, 6))
 plt.scatter(range(len(y_val)), y_val, label="Actual", alpha=0.6)
 plt.scatter(range(len(y_pred)), y_pred, label="Predicted", alpha=0.6)
