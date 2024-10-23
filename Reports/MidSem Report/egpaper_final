@@ -169,7 +169,7 @@ In order to address this issue effectively we are working on a Food Delivery Tim
             \label{fig:heatmap}
         \end{figure}
 
-        The heatmap visualizes relationships between various numeric features. Delivery Location Latitude & Restaurant Latitude have a strong positive correlation (0.94), indicating that delivery and restaurant locations tend to align closely in latitude.
+        The heatmap visualizes relationships between various numeric features. Delivery Location Latitude \& Restaurant Latitude have a strong positive correlation (0.94), indicating that delivery and restaurant locations tend to align closely in latitude.
 
         \begin{figure}[ht]
             \centering
@@ -184,12 +184,12 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 
 %-------------------------------------------------------------------------
 \section{Methodology}
-    The main objective is to predict food delivery times using machine learning techniques. The dataset contains 20 different features that determine the prediction.
+    The main objective is to predict food delivery times using machine learning techniques. The dataset contains 19 different features that determine the prediction.
 
     We followed a structured methodology which involved the following steps:
     \begin{itemize}
         \item \textbf{Data Collection and Preprocessing}: The dataset was preprocessed to handle inconsistencies, missing values, and data types while categorical variables were label-encoded.
-        \item \textbf{Feature Selection}: Feature importance techniques, such as using Random Forest's feature importances, were employed to identify the most influential features.
+        % \item \textbf{Feature Selection}: Feature importance techniques, such as using Random Forest's feature importances, were employed to identify the most influential features.
         \item \textbf{Model Training and Evaluation}: Multiple machine learning models were trained, evaluated, and compared using performance metrics such as R² score and Mean Squared Error (MSE).
         \item \textbf{Exploratory Data Analysis (EDA)}: Visualizations such as box plots, violin plots, pair plots, correlation heatmap and Umap were generated to understand feature distributions and relationships.
     \end{itemize}
@@ -250,9 +250,7 @@ In order to address this issue effectively we are working on a Food Delivery Tim
 
     Following data preprocessing and exploratory data analysis, various regression and ensemble methods were evaluated to build the prediction model.
 
-    Future work aims to enhance feature selection through KMeans clustering and explore additional ensemble techniques to optimize model performance.
-
-
+    Future work aims to enhance feature selection through KMeans clustering and explore additional ensemble techniques to optimize model performance. Additionally, SVM can be used to evaluate the performance of the refined feature set by identifying optimal decision boundaries, leveraging both linear and non-linear kernels.
 
     \subsection{Individual Contribution}
         - \textbf{Vikranth Udandarao}: Literature review, Data Collection, EDA, dataset visualization, model analysis and results.
