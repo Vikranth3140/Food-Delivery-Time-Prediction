@@ -3,22 +3,17 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# Load the dataset
-train = pd.read_csv('../datasets/new/train.csv')
+train=pd.read_csv('../datasets/new/train.csv')
 print(train.head())
 
-# Create a directory to save the plots
-output_dir = "EDA_plots"
+output_dir="EDA_plots"#a Directory to save the plots
 os.makedirs(output_dir, exist_ok=True)
 
-# Define a color palette for better visual appeal
-palette = 'Set3'
+palette='Set3'# color palette for better visualization
 
-# List of categorical columns for box plots
-categorical_cols = ['Weatherconditions', 'Road_traffic_density', 'Type_of_order', 
+categorical_cols=['Weatherconditions', 'Road_traffic_density', 'Type_of_order', 
                     'Type_of_vehicle', 'Festival', 'City']
 
-# Loop through each categorical column and create a box plot, save to the EDA_plots folder
 for col in categorical_cols:
     plt.figure(figsize=(10, 6))
     sns.boxplot(x=col, y='Time_taken(min)', data=train, palette=palette)
@@ -26,16 +21,14 @@ for col in categorical_cols:
     plt.xticks(rotation=45, fontsize=12)
     plt.yticks(fontsize=12)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f'boxplot_{col}.png'))  # Save the figure
-    plt.close()  # Close the figure to avoid display
+    plt.savefig(os.path.join(output_dir, f'boxplot_{col}.png'))
+    plt.close()
 
-# Pair plot for numerical columns, save it to the folder
-sns.pairplot(train)
+sns.pairplot(train)# Pair Plot
 plt.savefig(os.path.join(output_dir, 'pairplot.png'))
 plt.close()
-
-# Plot histograms for all numeric features and save each plot
-numeric_features = train.select_dtypes(include=['float64', 'int64']).columns
+# Plotting histograms for all numeric features
+numeric_features=train.select_dtypes(include=['float64', 'int64']).columns
 for feature in numeric_features:
     plt.figure(figsize=(10, 6))
     sns.histplot(train[feature], kde=True, bins=30)
@@ -43,10 +36,9 @@ for feature in numeric_features:
     plt.xlabel(feature)
     plt.ylabel('Frequency')
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f'histogram_{feature}.png'))  # Save the figure
+    plt.savefig(os.path.join(output_dir, f'histogram_{feature}.png'))
     plt.close()
-
-# Loop through each categorical column and create a violin plot, save each plot
+    
 for col in categorical_cols:
     plt.figure(figsize=(10, 6))
     sns.violinplot(x=col, y='Time_taken(min)', data=train)
