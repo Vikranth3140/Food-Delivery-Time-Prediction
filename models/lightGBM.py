@@ -9,23 +9,30 @@ df = pd.read_csv("../Datasets/new/train.csv")
 
 label_encoder = LabelEncoder()
 
-categorical_cols = ['Weatherconditions', 'Road_traffic_density', 
-                    'Type_of_order', 'Type_of_vehicle', 'Festival', 'City',
-                    'ID', 'Delivery_person_ID', 'Order_Date', 'Time_Orderd',
-                    'Time_Order_picked']
+categorical_cols = [
+    "Weatherconditions",
+    "Road_traffic_density",
+    "Type_of_order",
+    "Type_of_vehicle",
+    "Festival",
+    "City",
+    "ID",
+    "Delivery_person_ID",
+    "Order_Date",
+    "Time_Orderd",
+    "Time_Order_picked",
+]
 
 for col in tqdm(categorical_cols):
     df[col] = label_encoder.fit_transform(df[col])
 
-non_numeric_columns_after = df.select_dtypes(include=['object']).columns
+non_numeric_columns_after = df.select_dtypes(include=["object"]).columns
 print(f"Remaining non-numeric columns after encoding: {non_numeric_columns_after}")
 
-X = df.drop(columns=['Time_taken(min)']) 
-y = df['Time_taken(min)'] 
+X = df.drop(columns=["Time_taken(min)"])
+y = df["Time_taken(min)"]
 
-X_train, X_val, y_train, y_val = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
 lgbm_model = LGBMRegressor(n_estimators=500, random_state=42)
 

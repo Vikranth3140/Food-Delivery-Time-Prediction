@@ -30,30 +30,28 @@ categorical_features = df[
     ]
 ]
 
-target = df["Time_taken(min)"]
+y = df["Time_taken(min)"]
 
 encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
 encoded_categorical = encoder.fit_transform(categorical_features)
-features = pd.concat(
+X = pd.concat(
     [pd.DataFrame(encoded_categorical), numerical_features.reset_index(drop=True)],
     axis=1,
 )
 
-X_train, X_test, y_train, y_test = train_test_split(
-    features, target, test_size=0.2, random_state=42
-)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
 model = xgb.XGBRegressor(
     objective="reg:squarederror", n_estimators=500, max_depth=7, learning_rate=0.1
 )
 model.fit(X_train, y_train)
 
-y_pred = model.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
+y_pred = model.predict(X_val)
+mse = mean_squared_error(y_val, y_pred)
+r2 = r2_score(y_val, y_pred)
 
 tolerance = 5
-accuracy = (abs(y_pred - y_test) <= tolerance).mean() * 100
+accuracy = (abs(y_pred - y_val) <= tolerance).mean() * 100
 
 print(f"Mean Squared Error: {mse:.4f}")
 print(f"R2 Score: {r2:.4f}")
