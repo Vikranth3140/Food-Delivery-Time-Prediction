@@ -5,47 +5,57 @@ from sklearn.preprocessing import OneHotEncoder
 # Load the dataset
 df = pd.read_csv("../../datasets/new/train.csv")
 
-# Define numerical and categorical features based on the cleaned dataset
-numerical_features = df[
-    ["Delivery_person_Age", "Delivery_person_Ratings", "Restaurant_latitude", 
-     "Restaurant_longitude", "Delivery_location_latitude", "Delivery_location_longitude", 
-     "Vehicle_condition", "multiple_deliveries"]
+# Define numerical and categorical features
+numerical_features = [
+    "Delivery_person_Age", "Delivery_person_Ratings", "Restaurant_latitude", 
+    "Restaurant_longitude", "Delivery_location_latitude", "Delivery_location_longitude", 
+    "Vehicle_condition", "multiple_deliveries"
 ]
 
-categorical_features = df[
-    ["Weatherconditions", "Road_traffic_density", "Type_of_order", 
-     "Type_of_vehicle", "Festival", "City"]
+categorical_features = [
+    "Weatherconditions", "Road_traffic_density", "Type_of_order", 
+    "Type_of_vehicle", "Festival", "City"
 ]
-
-# Target variable
-target = df["Time_taken(min)"]
 
 # Encode categorical variables using OneHotEncoder
 encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-encoded_categorical = encoder.fit_transform(categorical_features)
+encoded_categorical = encoder.fit_transform(df[categorical_features])
 
 # Get feature names for the one-hot encoded columns
-categorical_feature_names = encoder.get_feature_names_out(categorical_features.columns)
+categorical_feature_names = encoder.get_feature_names_out(categorical_features)
 
 # Combine numerical and one-hot encoded categorical features into a single DataFrame
-features = pd.concat([pd.DataFrame(encoded_categorical), numerical_features.reset_index(drop=True)], axis=1)
+features = pd.concat([
+    pd.DataFrame(encoded_categorical, columns=categorical_feature_names), 
+    df[numerical_features].reset_index(drop=True)
+], axis=1)
 
-# Assign appropriate column names
-feature_names = list(categorical_feature_names) + list(numerical_features.columns)
-features.columns = feature_names
+# Target variable
+target = df["Time_taken(min)"]
 
 # SelectKBest to find important features using f_regression
 kbest = SelectKBest(score_func=f_regression, k="all")
 kbest.fit(features, target)
 
-# Get scores and create a DataFrame for better visualization
-feature_scores = pd.DataFrame({"Feature": feature_names, "Score": kbest.scores_})
+# Extract scores for each one-hot encoded feature
+feature_scores = pd.DataFrame({
+    "Feature": list(categorical_feature_names) + numerical_features,
+    "Score": kbest.scores_
+})
 
-# Sort features by importance
-feature_scores = feature_scores.sort_values(by="Score", ascending=False)
+# Map scores back to original labels
+feature_scores["Original_Label"] = feature_scores["Feature"].apply(
+    lambda x: next((label for label in categorical_features if label in x), x)
+)
 
-# Print feature scores
-print(feature_scores)
+# Aggregate scores by original label
+aggregated_scores = feature_scores.groupby("Original_Label")["Score"].sum().reset_index()
 
-# Save feature scores to a file
-feature_scores.to_csv("feature_scores.txt", index=False)
+# Sort by importance
+aggregated_scores = aggregated_scores.sort_values(by="Score", ascending=False)
+
+# Print aggregated scores
+print(aggregated_scores)
+
+# Save aggregated scores to a file
+aggregated_scores.to_csv("aggregated_feature_scores.csv", index=False)
