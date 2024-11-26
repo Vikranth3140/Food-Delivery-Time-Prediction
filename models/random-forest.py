@@ -1,9 +1,9 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-from sklearn.preprocessing import LabelEncoder
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 df = pd.read_csv("../Datasets/new/train.csv")
@@ -12,11 +12,15 @@ X = df.drop(columns=["Time_taken(min)"])
 y = df["Time_taken(min)"]
 
 categorical_columns = X.select_dtypes(include=["object"]).columns
+
 label_encoder = LabelEncoder()
+
 for col in categorical_columns:
     X[col] = label_encoder.fit_transform(X[col])
 
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
 results = []
 
@@ -43,6 +47,7 @@ for n_estimators in tqdm(range(100, 1001, 100), desc="Training Random Forest"):
     print("-" * 50)
 
 results_df = pd.DataFrame(results)
+
 plt.figure(figsize=(10, 6))
 plt.plot(results_df["n_estimators"], results_df["r2_score"], marker="o")
 plt.title("R² Score vs Number of Estimators")
