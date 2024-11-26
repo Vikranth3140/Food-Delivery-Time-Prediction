@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-train=pd.read_csv('../datasets/new/train.csv')
+train=pd.read_csv('../Datasets/new/train.csv')
 print(train.head())
 
 output_dir="EDA_plots"#a Directory to save the plots

@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the dataset
-df = pd.read_csv("../datasets/new/train.csv")
+df = pd.read_csv("../Datasets/new/train.csv")
 
 # Selected features based on importance
 selected_features = [

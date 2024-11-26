@@ -6,7 +6,7 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
-df=pd.read_csv('../datasets/new/train.csv')
+df=pd.read_csv('../Datasets/new/train.csv')
 
 X=df.drop(columns=['Time_taken(min)'])
 y=df['Time_taken(min)']
