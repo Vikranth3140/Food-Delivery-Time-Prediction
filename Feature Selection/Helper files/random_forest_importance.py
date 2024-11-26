@@ -5,7 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
 # Load the dataset
-df = pd.read_csv("datasets/new/train.csv")
+df = pd.read_csv("../../Datasets/new/train.csv")
 
 # Step 1: Prepare features (X) and target (y)
 X = df.drop(columns=["Time_taken(min)"])  # Features (all columns except the target)

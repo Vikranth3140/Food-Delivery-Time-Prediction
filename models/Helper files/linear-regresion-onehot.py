@@ -24,7 +24,7 @@ import time
 start_time = time.time()
 
 # Load the preprocessed train dataset
-train = pd.read_csv("datasets\\new\\train.csv")
+train = pd.read_csv("../../Datasets/new/train.csv")
 
 # # Use only the first 100 rows
 # train = train.head(100)

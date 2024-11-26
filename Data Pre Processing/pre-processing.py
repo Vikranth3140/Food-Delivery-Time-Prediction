@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-os.makedirs("datasets/new", exist_ok=True)
+os.makedirs("../Datasets/new", exist_ok=True)
 
 
 def clean_dataset(df, is_train=True):
@@ -80,19 +80,19 @@ def clean_dataset(df, is_train=True):
 
 
 # Load the train dataset
-train = pd.read_csv("datasets/kaggle/train.csv", skipinitialspace=True)
+train = pd.read_csv("../Datasets/kaggle/train.csv", skipinitialspace=True)
 train_cleaned = clean_dataset(train, is_train=True)
-train_cleaned.to_csv("datasets/new/train.csv", index=False)
+train_cleaned.to_csv("../Datasets/new/train.csv", index=False)
 
 # Load the test dataset
-test = pd.read_csv("datasets/kaggle/test.csv", skipinitialspace=True)
+test = pd.read_csv("../Datasets/kaggle/test.csv", skipinitialspace=True)
 test_cleaned = clean_dataset(test, is_train=False)
-test_cleaned.to_csv("datasets/new/test.csv", index=False)
+test_cleaned.to_csv("../Datasets/new/test.csv", index=False)
 
-print("Train dataset cleaned and saved to 'datasets/new/train.csv'")
+print("Train dataset cleaned and saved to '../Datasets/new/train.csv'")
 print(f"\nNumber of rows in train dataset before cleaning: {train.shape[0]}")
 print(f"Number of rows in train dataset after cleaning: {train_cleaned.shape[0]}")
 
-print("Test dataset cleaned and saved to 'datasets/new/test.csv'")
+print("Test dataset cleaned and saved to '../Datasets/new/test.csv'")
 print(f"\nNumber of rows in test dataset before cleaning: {test.shape[0]}")
 print(f"Number of rows in test dataset after cleaning: {test_cleaned.shape[0]}")
