@@ -9,13 +9,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
     "import pandas as pd\n",
-    "train = pd.read_csv('/Users/ananyagarg/Sem5/ML/ML-Project/datasets/new/train.csv')\n",
-    "test = pd.read_csv('/Users/ananyagarg/Sem5/ML/ML-Project/datasets/new/test.csv')"
+    "train = pd.read_csv(\"../../Datasets/new/train.csv\")\n",
+    "test = pd.read_csv(\"../../Datasets/new/test.csv\")"
    ]
   },
   {
