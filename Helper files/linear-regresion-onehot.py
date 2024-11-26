@@ -24,17 +24,17 @@ import time
 start_time = time.time()
 
 # Load the preprocessed train dataset
-train = pd.read_csv('datasets\\new\\train.csv')
+train = pd.read_csv("datasets\\new\\train.csv")
 
 # # Use only the first 100 rows
 # train = train.head(100)
 
 # Prepare the features (X) and the target (y)
 # Drop the 'Time_taken(min)' column (target) from features
-X = train.drop(columns=['Time_taken(min)'])
+X = train.drop(columns=["Time_taken(min)"])
 
 # Target variable
-y = train['Time_taken(min)']
+y = train["Time_taken(min)"]
 
 # One-hot encode categorical variables (dummy encoding) with tqdm for progress tracking
 tqdm.pandas(desc="One-Hot Encoding")
@@ -64,8 +64,10 @@ print(f"R² Score: {r2:.2f}")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 
 # Print timing information
-print(f"Total time taken for training and predictions: {end_time - start_time:.2f} seconds")
+print(
+    f"Total time taken for training and predictions: {end_time - start_time:.2f} seconds"
+)
 
 # Check the few predictions vs actual values
-predicted_vs_actual = pd.DataFrame({'Actual': y_val, 'Predicted': y_pred})
+predicted_vs_actual = pd.DataFrame({"Actual": y_val, "Predicted": y_pred})
 print(predicted_vs_actual.head())

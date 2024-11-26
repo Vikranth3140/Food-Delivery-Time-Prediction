@@ -270,30 +270,30 @@ In order to address this issue effectively we are working on a Food Delivery Tim
     \bibitem{dergipark2}
         Application of Random Forest Algorithm in Food Delivery Time Prediction.
         Available at: \url{https://dergipark.org.tr/en/pub/forecasting/issue/60291/842180}.
-    
+
     \bibitem{kaggle}
         Gaurav Malik.
         \emph{Food Delivery Dataset}.
         Available at: \url{https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset/data}.
-    
+
     \bibitem{scikit-learn}
         Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., Duchesnay, E.
         \emph{Scikit-learn: Machine Learning in Python}.
         Journal of Machine Learning Research, 12, pp. 2825-2830, 2011.
         Available at: \url{https://scikit-learn.org}.
-    
+
     \bibitem{lightgbm}
         Ke, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q., and Liu, T. Y.
         \emph{LightGBM: A Highly Efficient Gradient Boosting Decision Tree}.
         Advances in Neural Information Processing Systems 30 (NIPS 2017).
         Available at: \url{https://lightgbm.readthedocs.io}.
-    
+
     \bibitem{xgboost}
         Chen, T. and Guestrin, C.
         \emph{XGBoost: A Scalable Tree Boosting System}.
         Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 2016.
         Available at: \url{https://xgboost.readthedocs.io}.
-    
+
 \end{thebibliography}
 
 \end{document}

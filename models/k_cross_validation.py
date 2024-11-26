@@ -15,45 +15,61 @@ from sklearn.metrics import silhouette_score
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
-df=pd.read_csv("/content/train.csv")
+df = pd.read_csv("/content/train.csv")
 
-numerical_features=df[[
-    "Delivery_person_Age", "Delivery_person_Ratings", "Restaurant_latitude",
-    "Restaurant_longitude", "Delivery_location_latitude", "Delivery_location_longitude",
-    "Vehicle_condition", "multiple_deliveries"
-]]
+numerical_features = df[
+    [
+        "Delivery_person_Age",
+        "Delivery_person_Ratings",
+        "Restaurant_latitude",
+        "Restaurant_longitude",
+        "Delivery_location_latitude",
+        "Delivery_location_longitude",
+        "Vehicle_condition",
+        "multiple_deliveries",
+    ]
+]
 
-categorical_features=df[[
-    "Weatherconditions", "Road_traffic_density", "Type_of_order",
-    "Type_of_vehicle", "Festival", "City"
-]]
+categorical_features = df[
+    [
+        "Weatherconditions",
+        "Road_traffic_density",
+        "Type_of_order",
+        "Type_of_vehicle",
+        "Festival",
+        "City",
+    ]
+]
 
-encoder=OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-encoded_categorical=encoder.fit_transform(categorical_features)
-features=pd.concat([pd.DataFrame(encoded_categorical), numerical_features.reset_index(drop=True)], axis=1)
+encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
+encoded_categorical = encoder.fit_transform(categorical_features)
+features = pd.concat(
+    [pd.DataFrame(encoded_categorical), numerical_features.reset_index(drop=True)],
+    axis=1,
+)
 # Convert column names to strings
-features.columns=features.columns.astype(str)
+features.columns = features.columns.astype(str)
 # Number of clusters
-n_clusters=5
+n_clusters = 5
 # K-Fold Cross-Validation for K-Means
-kf=KFold(n_splits=5, shuffle=True, random_state=42)
-silhouette_scores=[]
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+silhouette_scores = []
 for train_index, test_index in kf.split(features):
-    X_train, X_test=features.iloc[train_index], features.iloc[test_index]
+    X_train, X_test = features.iloc[train_index], features.iloc[test_index]
     # Fit KMeans
-    kmeans=KMeans(n_clusters=n_clusters, random_state=42)
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     kmeans.fit(X_train)
-    cluster_labels=kmeans.predict(X_test)
-    score=silhouette_score(X_test, cluster_labels)# Silhouette Score
+    cluster_labels = kmeans.predict(X_test)
+    score = silhouette_score(X_test, cluster_labels)  # Silhouette Score
     silhouette_scores.append(score)
-average_score=np.mean(silhouette_scores)
+average_score = np.mean(silhouette_scores)
 
 print(f"Average Silhouette Score from K-Fold Cross-Validation: {average_score:.4f}")
 plt.figure(figsize=(10, 6))
-plt.plot(range(1, len(silhouette_scores) + 1), silhouette_scores, marker='o')
-plt.title('Silhouette Scores for K-Means across Folds')
-plt.xlabel('Fold Number')
-plt.ylabel('Silhouette Score')
+plt.plot(range(1, len(silhouette_scores) + 1), silhouette_scores, marker="o")
+plt.title("Silhouette Scores for K-Means across Folds")
+plt.xlabel("Fold Number")
+plt.ylabel("Silhouette Score")
 plt.xticks(range(1, len(silhouette_scores) + 1))
 plt.grid()
 plt.show()

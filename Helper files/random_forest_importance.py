@@ -5,21 +5,23 @@ from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
 # Load the dataset
-df = pd.read_csv('datasets/new/train.csv')
+df = pd.read_csv("datasets/new/train.csv")
 
 # Step 1: Prepare features (X) and target (y)
-X = df.drop(columns=['Time_taken(min)'])  # Features (all columns except the target)
-y = df['Time_taken(min)']  # Target (Time taken)
+X = df.drop(columns=["Time_taken(min)"])  # Features (all columns except the target)
+y = df["Time_taken(min)"]  # Target (Time taken)
 
 # Step 2: Label encode categorical variables
 label_encoders = {}
-for column in X.select_dtypes(include=['object']).columns:
+for column in X.select_dtypes(include=["object"]).columns:
     le = LabelEncoder()
     X[column] = le.fit_transform(X[column])
     label_encoders[column] = le  # Store the label encoder for future use
 
 # Step 3: Split the dataset into training and test sets (70% train, 30% test)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
 
 # Step 4: Initialize the Random Forest model
 rf = RandomForestRegressor(n_estimators=1000, random_state=42)
@@ -34,25 +36,21 @@ importances = rf.feature_importances_
 features = X.columns
 
 # Step 8: Create a DataFrame for better visualization
-importance_df = pd.DataFrame({'Feature': features, 'Importance': importances})
+importance_df = pd.DataFrame({"Feature": features, "Importance": importances})
 
 # Step 9: Sort the features by importance
-importance_df = importance_df.sort_values(by='Importance', ascending=False)
+importance_df = importance_df.sort_values(by="Importance", ascending=False)
 
 # Step 10: Display the sorted feature importances
 print(importance_df)
 
 # Step 11: Plot the feature importances
 plt.figure(figsize=(10, 6))
-plt.barh(importance_df['Feature'], importance_df['Importance'])
-plt.xlabel('Feature Importance')
-plt.ylabel('Features')
-plt.title('Feature Importance in Random Forest Model')
+plt.barh(importance_df["Feature"], importance_df["Importance"])
+plt.xlabel("Feature Importance")
+plt.ylabel("Features")
+plt.title("Feature Importance in Random Forest Model")
 plt.show()
-
-
-
-
 
 
 #  Feature  Importance

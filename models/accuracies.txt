@@ -48,4 +48,3 @@ XGBoost:
 Training Metrics               Test Metrics
 R2 score: ...                  R2 score: 0.79
 MSE:                           MSE: 18.41
-
