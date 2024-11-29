@@ -2,8 +2,6 @@
 
 [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/) [![sk-learn](https://img.shields.io/badge/scikit-learn-grey.svg?logo=scikit-learn)](https://scikit-learn.org/stable/whats_new.html)
 
-<img src="fig/image.png" alt="Food Delivery Illustration" width="500" height="400">
-
 ## Introduction
 
 Running a food delivery service comes with the challenge of keeping customers happy by delivering their meals on time and in good condition despite hurdles like traffic or bad weather, which can throw off the schedule unpredictably.
@@ -18,6 +16,7 @@ We have also developed a **Command Line Interface (CLI)** to allow users to inpu
 - **Slow:** 45–60 minutes  
 - **Very Slow:** ≥ 60 minutes  
 
+<img src="fig/image.png" alt="Food Delivery Illustration" width="500" height="400">
 
 ## Directory Structure
 
