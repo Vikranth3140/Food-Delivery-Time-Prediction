@@ -30,112 +30,129 @@ def begin_cli():
     )
     print(title)
 
-def preprocess_and_train(data):
-    X = data.drop(columns=['Time_taken(min)'])
-    y = data['Time_taken(min)']
+
+def get_user_input():
+    print(
+        f"\n{Fore.YELLOW}Please enter the details to predict the time taken for delivery.{Style.RESET_ALL}\n"
+    )
+    return {
+        "Road_traffic_density": input(
+            f"{Fore.CYAN}Enter Road Traffic Density (High, Medium, Low): {Style.RESET_ALL}"
+        ),
+        "Festival": input(
+            f"{Fore.CYAN}Is it during a Festival? (Yes/No): {Style.RESET_ALL}"
+        ),
+        "multiple_deliveries": int(
+            input(
+                f"{Fore.CYAN}Enter number of Multiple Deliveries (e.g., 0, 1): {Style.RESET_ALL}"
+            )
+        ),
+        "Delivery_person_Ratings": float(
+            input(
+                f"{Fore.CYAN}Enter Delivery Person's Rating (e.g., 4.5): {Style.RESET_ALL}"
+            )
+        ),
+        "Delivery_person_Age": int(
+            input(f"{Fore.CYAN}Enter Delivery Person's Age: {Style.RESET_ALL}")
+        ),
+        "City": input(
+            f"{Fore.CYAN}Enter City Type (Urban, Metropolitian): {Style.RESET_ALL}"
+        ),
+        "Weatherconditions": input(
+            f"{Fore.CYAN}Enter Weather Conditions (Sunny, Cloudy): {Style.RESET_ALL}"
+        ),
+        "Vehicle_condition": int(
+            input(
+                f"{Fore.CYAN}Enter Vehicle Condition (0 for Poor, 1 for Average, 2 for Good): {Style.RESET_ALL}"
+            )
+        ),
+        "Type_of_vehicle": input(
+            f"{Fore.CYAN}Enter Type of Vehicle (motorcycle, scooter): {Style.RESET_ALL}"
+        ),
+    }
+
+
+def predict_time(input_data, model, encoders):
+    input_df = pd.DataFrame([input_data])
+    for col, encoder in encoders.items():
+        input_df[col] = encoder.transform(input_df[col])
     
-    categorical_features = X.select_dtypes(include='object').columns
+    prediction = model.predict(input_df)[0]
+    return np.round(prediction, 2)
+
+
+def predict_range(time):
+    if time <= 15:
+        return f"Very Quick (<= 15 minutes)"
+    elif time <= 30:
+        return f"Quick (15 - 30 minutes)"
+    elif time <= 45:
+        return f"Moderate (30 - 45 minutes)"
+    elif time <= 60:
+        return f"Slow (45 - 60 minutes)"
+    else:
+        return f"Very Slow (>= 60 minutes)"
+
+
+def preprocess_and_train(data):
+    X = data.drop(columns=["Time_taken(min)"])
+    y = data["Time_taken(min)"]
+
+    categorical_features = X.select_dtypes(include="object").columns
     encoders = {col: LabelEncoder() for col in categorical_features}
     for col in categorical_features:
         X[col] = encoders[col].fit_transform(X[col])
-    
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
+
     train_data = lgb.Dataset(X_train, label=y_train, categorical_feature=categorical_features.tolist())
     test_data = lgb.Dataset(X_test, label=y_test, reference=train_data)
-    
+
     params = {
-        'objective': 'regression',
-        'metric': 'rmse',
-        'boosting_type': 'gbdt',
-        'verbose': -1
+        "objective": "regression",
+        "metric": "rmse",
+        "boosting_type": "gbdt",
+        "verbose": -1,
     }
-    
+
     model = lgb.train(
         params,
         train_data,
         valid_sets=[test_data],
         num_boost_round=100,
-        callbacks=[lgb.early_stopping(stopping_rounds=10)]
+        callbacks=[lgb.early_stopping(stopping_rounds=10)],
     )
-    
+
     return model, encoders
 
-# data = pd.read_csv("Datasets/new/train.csv")
-data = pd.read_csv("Datasets/kbest features/kbest_features.csv")
-
-model, encoders = preprocess_and_train(data)
-
-def main():
-    begin_cli()
-    
-    def get_input(prompt, cast_type=str, options=None, default=None):
-        while True:
-            try:
-                value = input(f"{Fore.CYAN}{prompt}{Style.RESET_ALL} ")
-                if not value and default is not None:
-                    return default
-                if options and value not in options:
-                    print(f"{Fore.RED}Invalid choice. Please select from {options}.{Style.RESET_ALL}")
-                    continue
-                return cast_type(value)
-            except ValueError:
-                print(f"{Fore.RED}Invalid input. Please enter a valid {cast_type.__name__}.{Style.RESET_ALL}")
-    
-    Road_traffic_density = get_input(
-        "Enter Road Traffic Density (High, Medium, Low):",
-        options=['High', 'Medium', 'Low']
-    )
-    Festival = get_input(
-        "Is it during a Festival? (Yes/No):",
-        options=['Yes', 'No']
-    )
-    multiple_deliveries = get_input(
-        "Enter number of Multiple Deliveries (e.g., 0, 1):",
-        cast_type=int
-    )
-    Delivery_person_Ratings = get_input(
-        "Enter Delivery Person's Rating (e.g., 4.5):",
-        cast_type=float
-    )
-    Delivery_person_Age = get_input(
-        "Enter Delivery Person's Age:",
-        cast_type=int
-    )
-    City = get_input(
-        "Enter City Type (Urban, Metropolitian):",
-        options=['Urban', 'Metropolitian']
-    )
-    Weatherconditions = get_input(
-        "Enter Weather Conditions (Sunny, Cloudy):",
-        options=['Sunny', 'Cloudy']
-    )
-    Vehicle_condition = get_input(
-        "Enter Vehicle Condition (0 for Poor, 1 for Average, 2 for Good):",
-        cast_type=int,
-        options=['0', '1', '2']
-    )
-    Type_of_vehicle = get_input(
-        "Enter Type of Vehicle (motorcycle, scooter):",
-        options=['motorcycle', 'scooter']
-    )
-    
-    input_data = pd.DataFrame({
-        'Road_traffic_density': [Road_traffic_density],
-        'Festival': [Festival],
-        'multiple_deliveries': [multiple_deliveries],
-        'Delivery_person_Ratings': [Delivery_person_Ratings],
-        'Delivery_person_Age': [Delivery_person_Age],
-        'City': [City],
-        'Weatherconditions': [Weatherconditions],
-        'Vehicle_condition': [Vehicle_condition],
-        'Type_of_vehicle': [Type_of_vehicle]
-    })
-    for col, encoder in encoders.items():
-        input_data[col] = encoder.transform(input_data[col])
-    
-    prediction = model.predict(input_data)[0]
-    print(f"{Fore.GREEN}Predicted Time Taken (minutes): {np.round(prediction, 2)}{Style.RESET_ALL}")
 
 if __name__ == "__main__":
-    main()
+    begin_cli()
+    print(f"\n{Fore.YELLOW}Welcome to the Delivery Time Predictor CLI!{Style.RESET_ALL}\n")
+
+    # data = pd.read_csv("Datasets/new/train.csv")
+    data = pd.read_csv("Datasets/kbest features/kbest_features.csv")
+
+    model, encoders = preprocess_and_train(data)
+
+    while True:
+        user_input = get_user_input()
+        predicted_time = predict_time(user_input, model, encoders)
+        predicted_range = predict_range(predicted_time)
+
+        print(
+            f'\n{Fore.GREEN}Predicted Time Taken{Style.RESET_ALL}: {predicted_time} minutes'
+        )
+        print(
+            f"{Fore.GREEN}Delivery Speed Range{Style.RESET_ALL}: {predicted_range}\n"
+        )
+
+        another = input(
+            f"{Fore.YELLOW}Would you like to predict another delivery? (yes/no): {Style.RESET_ALL}"
+        ).lower()
+        if another != "yes":
+            break
+
+    print(
+        f"\n{Fore.YELLOW}Thank you for using the Delivery Time Prediction System!{Style.RESET_ALL}"
+    )
