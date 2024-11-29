@@ -6,17 +6,17 @@
 
 ## Introduction
 
-Running a food delivery service comes with the challenge of keeping customers happy by delivering their meals on time and in condition despite hurdles like traffic or bad weather which can throw off the schedule unpredictably.
+Running a food delivery service comes with the challenge of keeping customers happy by delivering their meals on time and in good condition despite hurdles like traffic or bad weather, which can throw off the schedule unpredictably.
 
-In order to address this issue effectively we are working on a Food Delivery Time Prediction System that utilizes machine learning methods. Our goal is to predict delivery times with precision by examining delivery data, current traffic situations and real time weather trends.
+To address this issue effectively, we have developed a **Food Delivery Time Prediction System** that utilizes machine learning methods. Our goal is to predict delivery times with precision by analyzing delivery data, current traffic situations, and real-time weather trends.
 
-We have developed a Command Line Interface (CLI) to allow users to input food delivery parameters and get delivery time predictions. This tool provides an estimate of the inputted food delivery time within specific ranges:
+We have also developed a **Command Line Interface (CLI)** to allow users to input food delivery parameters and get delivery time predictions. This tool provides an estimate of the food delivery time within specific ranges:
 
-- Very Quick: <= 15 minutes
-- Quick: 15 - 30 minutes
-- Moderate: 30 - 45 minutes
-- Slow: 45 - 60 minutes
-- Very Slow: >= 60 minutes
+- **Very Quick:** ≤ 15 minutes  
+- **Quick:** 15–30 minutes  
+- **Moderate:** 30–45 minutes  
+- **Slow:** 45–60 minutes  
+- **Very Slow:** ≥ 60 minutes  
 
 
 ## Directory Structure
@@ -143,125 +143,99 @@ Food-Delivery-Time-Prediction/
 
 ## Getting Started
 
-All our code was tested on Python 3.6.8 with scikit-learn 1.3.2. Ideally, our scripts require access to a single GPU (uses `.cuda()` for inference). Inference can also be done on CPUs with minimal changes to the scripts.
+All scripts have been tested on Python 3.6.8 with scikit-learn 1.3.2. The scripts can run on either CPU or GPU.
 
 ### Setting up the Environment
 
-We recommend setting up a Python virtual environment and installing all the requirements. Please follow these steps to set up the project folder correctly:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Vikranth3140/Food-Delivery-Time-Prediction.git
+   cd Food-Delivery-Time-Prediction
+   ```
 
-```bash
-git clone https://github.com/Vikranth3140/Food-Delivery-Time-Prediction.git
-cd Food-Delivery-Time-Prediction
-
-python3 -m venv ./env
-source env/bin/activate
-
-pip install -r requirements.txt
-```
+2. Create a virtual environment and install dependencies:
+   ```bash
+   python3 -m venv ./env
+   source env/bin/activate
+   pip install -r requirements.txt
+   ```
 
 ### Setting up Datasets
 
-The datasets have been taken from [Food Delivery Dataset](https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset/data) dataset.
+The datasets used in this project are available on [Kaggle](https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset). Place the dataset files in the `datasets/` directory.
 
-## Running the Models
-
-You can run the final model using:
-
-```bash
-python main.py
-```
+---
 
 ## Data Preprocessing
 
-The Data has been pre processed:
+The preprocessing steps include:
 
-- Removed 'conditions' prefix from 'Weather Conditions'.
-- Standardized columns into appropriate formats: 'strings', 'integers', and 'floats'.
-- Converted Order Date to 'datetime' format.
-- Extracted time from 'Time Ordered' and 'Time Order Picked'.
-- Dropped rows with null values for consistency.
-
-### Encoding Categorical Variables
-
-Categorical variables are encoded using Label Encoding.
+1. Standardizing columns into appropriate formats: strings, integers, and floats.
+2. Converting order date to `datetime` format.
+3. Extracting time from `Time Ordered` and `Time Order Picked`.
+4. Dropping rows with null values.
+5. Encoding categorical variables using label encoding.
 
 ### Feature Selection
 
-Some features are dropped in the dataset due to lower scores in [kbest.py](Feature Selection\kbest.py):
+Features were selected using `SelectKBest` to retain only the most significant predictors, as implemented in [kbest.py](Feature%20Selection/kbest.py).
 
-- ID
-- Delivery_person_ID
-- Order_Date
-- Time_Orderd
-- Time_Order_picked
-
-### Feature Selection
-
-We use SelectKBest for helping us know which features contribute the most towards our target variable as shown in [kbest.py](Feature Selection\kbest.py).
+---
 
 ## Model Improvement
 
-We employed strategies such as hyperparameter tuning using `GridSearchCV` for model improvement.
+The following techniques were applied to improve model performance:
+- **Hyperparameter Tuning:** Using `GridSearchCV` to optimize model parameters.
 
-### Hyperparameter Tuning
-
-Hyperparameter tuning is performed using `GridSearchCV` to optimize model parameters.
+---
 
 ## Command Line Interface (CLI)
 
-We have developed a `Command Line Interface (CLI)` to allow users to input delivery time parameters and get delivery time predictions. This tool provides an estimate of the inputted food delivery time within specific ranges:
-
-- Very Quick: <= 15 minutes
-- Quick: 15 - 30 minutes
-- Moderate: 30 - 45 minutes
-- Slow: 45 - 60 minutes
-- Very Slow: >= 60 minutes
-
-### Using the CLI
-
+To use the CLI for predictions:
 1. Navigate to the project directory.
-2. Run the CLI:
+2. Run the CLI script:
    ```bash
    python main.py
    ```
-3. Follow the prompts to input the movie features and choose the prediction model.
+
+Follow the prompts to input the delivery parameters and obtain predictions.
+
+---
 
 ## Model Evaluation Results
 
-We evaluated our models using two key metrics: R² Score (Coefficient of Determination) and MSE (Mean Squared Error). Here are the results for each model:
+| Model                     | MSE    | R² Score |
+|---------------------------|--------|----------|
+| Linear Regression         | 42.80  | 0.51     |
+| Decision Tree             | 41.14  | 0.53     |
+| Decision Tree (Bagging)   | 21.67  | 0.75     |
+| Random Forest             | 21.21  | 0.75     |
+| Elastic Net Regularization| 47.35  | 0.46     |
+| LightGBM                  | 16.88  | 0.80     |
+| XGBoost                   | 18.41  | 0.79     |
 
-| Model             | MSE | R² Score |
-| ----------------- | ----------- | ------------ |
-        Linear Regression              & 42.80     & 0.51
-        Decision Tree                  & 41.14     & 0.53
-        Decision Tree with Bagging     & 21.67     & 0.75
-        Random Forest                  & 21.21     & 0.75
-        Elastic Net Regularization     & 47.35     & 0.46
-        LightGBM                      & 16.88     & 0.80
-        XGBoost                       & 18.41     & 0.79
-
-## Conclusion
+---
 
 The developed LightGBM model demonstrates promising accuracy and generalization capabilities, facilitating informed decision-making in the food delivery space to predict delivery time.
 
-<!-- ## Citation
+---
 
-If you found this work useful, please consider citing it as:
+## Conclusion
 
-```
-@misc{udandarao2024movie,
-      title={Movie Revenue Prediction using Machine Learning Models},
-      author={Vikranth Udandarao and Pratyush Gupta},
-      year={2024},
-      eprint={2405.11651},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
-}
-``` -->
+The **LightGBM model** demonstrates high accuracy and generalization, making it the most suitable for delivery time predictions in this context.
+
+---
 
 ## Contact
 
-Please feel free to open an issue or email us at [vikranth22570@iiitd.ac.in](mailto:vikranth22570@iiitd.ac.in), [ayaan22302@iiitd.ac.in](mailto:ayaan22302@iiitd.ac.in), [swara22524@iiitd.ac.in](mailto:swara22524@iiitd.ac.in) or [ananya22068@iiitd.ac.in](mailto:ananya22068@iiitd.ac.in).
+For any queries or feedback, feel free to reach out to:
+
+- [Vikranth Udandarao](mailto:vikranth22570@iiitd.ac.in)
+- [Mohammad Ayaan](mailto:ayaan22302@iiitd.ac.in)
+- [Swara Parekh](mailto:swara22524@iiitd.ac.in)
+- [Ananya Garg](mailto:ananya22068@iiitd.ac.in)
+
+---
 
 ## License
 
