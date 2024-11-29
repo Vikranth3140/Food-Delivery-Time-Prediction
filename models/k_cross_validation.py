@@ -6,7 +6,8 @@ from sklearn.model_selection import KFold
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-df = pd.read_csv("../Datasets/new/train.csv")
+# df = pd.read_csv("../Datasets/new/train.csv")
+df = pd.read_csv("../Datasets/kbest features/kbest_features.csv")
 
 numerical_features = df[
     [
@@ -25,7 +26,6 @@ categorical_features = df[
     [
         "Weatherconditions",
         "Road_traffic_density",
-        "Type_of_order",
         "Type_of_vehicle",
         "Festival",
         "City",

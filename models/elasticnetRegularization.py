@@ -7,22 +7,17 @@ from sklearn.linear_model import ElasticNet
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from tqdm import tqdm
 
-df = pd.read_csv("../Datasets/new/train.csv")
+# df = pd.read_csv("../Datasets/new/train.csv")
+df = pd.read_csv("../Datasets/kbest features/kbest_features.csv")
 
 label_encoder = LabelEncoder()
 
 categorical_cols = [
     "Weatherconditions",
     "Road_traffic_density",
-    "Type_of_order",
     "Type_of_vehicle",
     "Festival",
     "City",
-    "ID",
-    "Delivery_person_ID",
-    "Order_Date",
-    "Time_Orderd",
-    "Time_Order_picked",
 ]
 
 for col in tqdm(categorical_cols):
