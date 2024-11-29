@@ -36,7 +36,7 @@ def preprocess_and_train(data):
     
     return model, encoders
 
-file_path = '/content/kbest_features.csv' 
+file_path = 'datasets/kbest features/kbest_features.csv'
 data = pd.read_csv(file_path)
 
 # Train the model
