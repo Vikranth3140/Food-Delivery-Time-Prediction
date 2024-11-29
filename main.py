@@ -35,8 +35,8 @@ def preprocess_and_train(data):
     
     return model, encoders
 
-# data = pd.read_csv("../Datasets/new/train.csv")
-data = pd.read_csv("../Datasets/kbest features/kbest_features.csv")
+# data = pd.read_csv("Datasets/new/train.csv")
+data = pd.read_csv("Datasets/kbest features/kbest_features.csv")
 
 model, encoders = preprocess_and_train(data)
 
