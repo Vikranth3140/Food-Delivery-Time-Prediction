@@ -21,8 +21,8 @@ X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_st
 
 model = LinearRegression()
 model.fit(X_train, y_train)
-
 y_pred = model.predict(X_val)
+
 r2 = r2_score(y_val, y_pred)
 mae = mean_absolute_error(y_val, y_pred)
 mse = mean_squared_error(y_val, y_pred)

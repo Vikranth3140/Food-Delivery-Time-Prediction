@@ -23,7 +23,6 @@ X_train, X_val, y_train, y_val = train_test_split(X_scaled, y, test_size=0.2, ra
 
 svm_model = SVR(kernel="rbf")
 svm_model.fit(X_train, y_train)
-
 y_pred = svm_model.predict(X_val)
 
 r2 = r2_score(y_val, y_pred)

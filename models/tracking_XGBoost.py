@@ -2,7 +2,7 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import r2_score, mean_squared_error
 
 df = pd.read_csv("../Datasets/new/train.csv")
 
@@ -45,14 +45,13 @@ model = xgb.XGBRegressor(
     objective="reg:squarederror", n_estimators=500, max_depth=7, learning_rate=0.1
 )
 model.fit(X_train, y_train)
-
 y_pred = model.predict(X_val)
-mse = mean_squared_error(y_val, y_pred)
-r2 = r2_score(y_val, y_pred)
 
+r2 = r2_score(y_val, y_pred)
+mse = mean_squared_error(y_val, y_pred)
 tolerance = 5
 accuracy = (abs(y_pred - y_val) <= tolerance).mean() * 100
 
-print(f"Mean Squared Error: {mse:.4f}")
 print(f"R2 Score: {r2:.4f}")
+print(f"Mean Squared Error: {mse:.4f}")
 print(f"Accuracy Measure (within {tolerance} min): {accuracy:.2f}%")

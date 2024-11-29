@@ -35,7 +35,6 @@ y = df["Time_taken(min)"]
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
 lgbm_model = LGBMRegressor(n_estimators=500, random_state=42)
-
 lgbm_model.fit(X, y)
 y_pred = lgbm_model.predict(X_val)
 

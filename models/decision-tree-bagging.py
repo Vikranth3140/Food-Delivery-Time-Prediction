@@ -22,9 +22,7 @@ X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_st
 
 base_model = DecisionTreeRegressor(random_state=42)
 
-model = BaggingRegressor(
-    estimator=base_model, n_estimators=50, random_state=42, n_jobs=-1
-)
+model = BaggingRegressor(estimator=base_model, n_estimators=50, random_state=42, n_jobs=-1)
 model.fit(X_train, y_train)
 y_pred = model.predict(X_val)
 
