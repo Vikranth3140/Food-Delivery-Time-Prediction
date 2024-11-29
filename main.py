@@ -6,6 +6,7 @@ import lightgbm as lgb
 import os
 from colorama import init, Fore, Style
 
+
 def begin_cli():
     init()
     os.system("cls" if os.name == "nt" else "clear")
@@ -76,7 +77,7 @@ def predict_time(input_data, model, encoders):
     input_df = pd.DataFrame([input_data])
     for col, encoder in encoders.items():
         input_df[col] = encoder.transform(input_df[col])
-    
+
     prediction = model.predict(input_df)[0]
     return np.round(prediction, 2)
 
@@ -140,12 +141,8 @@ if __name__ == "__main__":
         predicted_time = predict_time(user_input, model, encoders)
         predicted_range = predict_range(predicted_time)
 
-        print(
-            f'\n{Fore.GREEN}Predicted Time Taken{Style.RESET_ALL}: {predicted_time} minutes'
-        )
-        print(
-            f"{Fore.GREEN}Delivery Speed Range{Style.RESET_ALL}: {predicted_range}\n"
-        )
+        print(f"\n{Fore.GREEN}Predicted Time Taken{Style.RESET_ALL}: {predicted_time} minutes")
+        print(f"{Fore.GREEN}Delivery Speed Range{Style.RESET_ALL}: {predicted_range}\n")
 
         another = input(
             f"{Fore.YELLOW}Would you like to predict another delivery? (yes/no): {Style.RESET_ALL}"

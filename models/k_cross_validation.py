@@ -52,7 +52,7 @@ for train_index, test_index in kf.split(features):
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     kmeans.fit(X_train)
     cluster_labels = kmeans.predict(X_test)
-    
+
     score = silhouette_score(X_test, cluster_labels)
     silhouette_scores.append(score)
 

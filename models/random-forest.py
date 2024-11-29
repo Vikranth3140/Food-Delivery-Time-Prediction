@@ -27,7 +27,7 @@ for n_estimators in tqdm(range(100, 1001, 100), desc="Training Random Forest"):
     model = RandomForestRegressor(n_estimators=n_estimators, random_state=42, n_jobs=-1)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_val)
-    
+
     r2 = r2_score(y_val, y_pred)
     mae = mean_absolute_error(y_val, y_pred)
     mse = mean_squared_error(y_val, y_pred)
