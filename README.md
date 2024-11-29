@@ -230,7 +230,7 @@ The **LightGBM model** demonstrates high accuracy and generalization, making it 
 For any queries or feedback, feel free to reach out to:
 
 - [Vikranth Udandarao](mailto:vikranth22570@iiitd.ac.in)
-- [Mohammad Ayaan](mailto:ayaan22302@iiitd.ac.in)
+- [Mohmmad Ayaan](mailto:ayaan22302@iiitd.ac.in)
 - [Swara Parekh](mailto:swara22524@iiitd.ac.in)
 - [Ananya Garg](mailto:ananya22068@iiitd.ac.in)
 
