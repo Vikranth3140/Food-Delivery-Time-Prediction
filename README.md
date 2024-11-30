@@ -16,7 +16,11 @@ We have also developed a **Command Line Interface (CLI)** to allow users to inpu
 - **Slow:** 45–60 minutes  
 - **Very Slow:** ≥ 60 minutes  
 
-<img src="fig/image.png" alt="Food Delivery Illustration" width="500" height="400">
+<img src="fig/intro.png" alt="Food Delivery Illustration" width="500" height="400">
+
+<br>
+
+<img src="fig/cli.png" alt="Command Line Interface" width="500" height="400">
 
 ## Directory Structure
 
@@ -79,7 +83,8 @@ Food-Delivery-Time-Prediction/
 │   └── save_kbest_features.py
 │
 ├── fig/
-│   └── image.png
+│   ├── cli.png
+│   └── intro.png
 │
 ├── models/
 │   ├── Helper files/
