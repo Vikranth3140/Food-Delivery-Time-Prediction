@@ -1,7 +1,7 @@
 \documentclass[10pt,twocolumn,letterpaper]{article}
 
 % Include necessary packages
-\usepackage[review]{cvpr} % Use the review option for initial submission
+\usepackage{cvpr} % Use the review option for initial submission
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -19,21 +19,12 @@
 %%%%%%%%% TITLE
 \title{Food Delivery Time Prediction: Machine Learning Project}
 
-\author{Vikranth Udandarao\\
-Computer Science \& Engineering Dept., IIIT-Delhi, India \\
-{\tt\small vikranth22570@iiitd.ac.in}
-\and
-Mohmmad Ayaan \\
-Computer Science \& Engineering Dept., IIIT-Delhi, India \\
-{\tt\small ayaan22302@iiitd.ac.in}
-\and
-Swara Parekh \\
-Computer Science \& Engineering Dept., IIIT-Delhi, India \\
-{\tt\small swara22524@iiitd.ac.in}
-\and
-Ananya Garg \\
-Computer Science \& Engineering Dept., IIIT-Delhi, India \\
-{\tt\small ananya22068@iiitd.ac.in}
+\author{
+Ananya Garg \\ \small2022068
+\and Mohmmad Ayaan \\ \small2022308
+\and Swara Parekh \\ \small2022524
+\and Vikranth Udandarao \\ \small2022570
+\and Indraprastha Institute of Information Technology, Delhi
 }
 
 \maketitle
@@ -202,7 +193,7 @@ In order to address this issue effectively we are working on a Food Delivery Tim
             XGBoost an ensemble learning that iteratively builds a predictive model by combining predictions from multiple individual models. The relatively low MSE and the R² score indicate that the model produces accurate predictions of delivery times and is effective in capturing complex patterns in the data.
 
         \subsubsection{K-Fold Cross-Validation}
-            The dataset is divided into K equal folds. The model is trained on K-1 folds and tested on the remaining folds. This process is repeated K times, using each fold once as the validation set. The Average Silhouette Score (a measure of how similar an object is to its own cluster compared to other clusters) obtained from K-Fold Cross-Validation was 0.2889, indicating a moderate level of clustering quality.
+            The model is trained on K-1 folds and tested on the remaining folds. This process is repeated K times, using each fold as the validation set. The Average Silhouette Score (a measure of how similar an object is to its own cluster compared to other) obtained from K-Fold Cross-Validation was 0.2889, indicating a moderate level of clustering quality.
 
         \subsubsection{SVM}
             Support Vector Machines work by finding the optimal hyperplane in a high-dimensional space. The relatively low accuracy suggests inefficiency in capturing the complex patterns in the data, due to high-dimensional feature space or non-linear relationships.
