@@ -3,7 +3,7 @@ from sklearn.feature_selection import SelectKBest, f_regression
 from sklearn.preprocessing import OneHotEncoder
 
 # Load the dataset
-df = pd.read_csv("../../Datasets/new/train.csv")
+df = pd.read_csv("../Datasets/new/train.csv")
 
 # Define numerical and categorical features
 numerical_features = [
