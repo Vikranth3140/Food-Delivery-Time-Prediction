@@ -1,8 +1,8 @@
 # Food Delivery Time Prediction
 
-[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/) [![sk-learn](https://img.shields.io/badge/scikit-learn-grey.svg?logo=scikit-learn)](https://scikit-learn.org/stable/whats_new.html)
-
-[arXiv Paper](https://arxiv.org/abs/2503.15177)
+[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![sk-learn](https://img.shields.io/badge/scikit-learn-grey.svg?logo=scikit-learn)](https://scikit-learn.org/stable/whats_new.html)
+[![arXiv](https://img.shields.io/badge/arXiv-2503.15177-b31b1b.svg)](https://arxiv.org/abs/2503.15177)
 
 ## Introduction
 
