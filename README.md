@@ -4,7 +4,7 @@
 [![sk-learn](https://img.shields.io/badge/scikit-learn-grey.svg?logo=scikit-learn)](https://scikit-learn.org/stable/whats_new.html)
 [![arXiv](https://img.shields.io/badge/arXiv-2503.15177-b31b1b.svg)](https://arxiv.org/abs/2503.15177)
 
-[Academia Paper](https://www.academia.edu/128572647/Food_Delivery_Time_Prediction_in_Indian_Cities_Using_Machine_Learning_Models)
+[Academia Paper](https://www.academia.edu/128572647/Food_Delivery_Time_Prediction_in_Indian_Cities)
 
 ## Introduction
 
